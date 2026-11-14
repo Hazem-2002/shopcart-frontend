@@ -85,7 +85,7 @@ const MenuDrawer = ({ open, toggleDrawer }) => {
       slotProps={{
         paper: {
           className:
-            "!h-[100vh] !bg-bg-main min-w-[70vw] sm:min-w-[60vw] md:min-w-[50vw] !overflow-hidden",
+            "!h-[100dvh] !bg-bg-main min-w-[70vw] sm:min-w-[60vw] md:min-w-[50vw] !overflow-hidden",
         },
       }}
     >
@@ -95,7 +95,7 @@ const MenuDrawer = ({ open, toggleDrawer }) => {
           <Logo />
 
           <IconButton aria-label="Close menu" onClick={toggleDrawer}>
-            <X strokeWidth={1.8} className="text-primary size-5" />
+            <X strokeWidth={1.8} className="text-secondary size-5" />
           </IconButton>
         </header>
 

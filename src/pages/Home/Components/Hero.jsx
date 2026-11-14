@@ -2,19 +2,12 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Autoplay,
-  Navigation,
-  Pagination,
-  Keyboard,
-  EffectFade,
-} from "swiper/modules";
+import { Autoplay, Navigation, Pagination, Keyboard } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
-import "./Hero.css";
 
 import { ArrowRight } from "lucide-react";
 
@@ -79,11 +72,7 @@ const Hero = () => {
       <Swiper
         slidesPerView={1}
         spaceBetween={0}
-        modules={[Navigation, Pagination, Keyboard, EffectFade, Autoplay]}
-        effect="fade"
-        fadeEffect={{
-          crossFade: true,
-        }}
+        modules={[Navigation, Pagination, Keyboard, Autoplay]}
         speed={1000}
         loop={true}
         autoplay={true}
@@ -96,10 +85,13 @@ const Hero = () => {
         }}
         allowTouchMove={true}
         grabCursor={false}
-        className="hero-swiper group"
+        className="group"
       >
         {sliders.map((slider) => (
-          <SwiperSlide key={slider.id} className="!min-h-[calc(100dvh-72px)]">
+          <SwiperSlide
+            key={slider.id}
+            className="!min-h-[calc(100vh-64px)] sm:!min-h-[calc(100vh-72px)]"
+          >
             <div className="relative py-10 group isolate flex items-center min-h-[inherit] w-full overflow-hidden">
               {/* Background Image */}
               <img
