@@ -6,8 +6,9 @@ export const toggleWishlist = createAsyncThunk(
   async (_id, { getState, rejectWithValue }) => {
     try {
       const { accessToken, CSRFToken } = getState().auth;
+
       const response = await axios.patch(
-        `https://e-commerce-backend-eight-umber.vercel.app/api/v1/wishlists/${_id}/toggle`,
+        `/api/v1/wishlists/${_id}/toggle`,
         {},
         {
           headers: {

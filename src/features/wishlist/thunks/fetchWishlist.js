@@ -19,17 +19,19 @@ export const fetchWishlist = createAsyncThunk(
       const { accessToken } = getState().auth;
 
       const response = await axios.get(
-        `https://e-commerce-backend-eight-umber.vercel.app/api/v1/users/me/wishlist?${params.toString()}`,
+        `/api/v1/users/me/wishlist?${params.toString()}`,
         {
           headers: {
-            Authorization: `Bearer ${accessToken || localStorage.getItem("accessToken")}`,
+            Authorization: `Bearer ${
+              accessToken || localStorage.getItem("accessToken")
+            }`,
           },
+          withCredentials: true,
         },
       );
 
       return response.data;
     } catch (error) {
-      console.log(error.response?.data);
       return rejectWithValue(
         error.response?.data || { message: error.message },
       );

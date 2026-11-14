@@ -7,14 +7,6 @@ export const fetchProducts = createAsyncThunk(
     { page, limit, sort, fields, search, ...productsFilters } = {},
     { rejectWithValue },
   ) => {
-    console.log("fetchProducts called with:", {
-      page,
-      limit,
-      sort,
-      fields,
-      search,
-      ...productsFilters,
-    });
     try {
       const params = new URLSearchParams();
 
@@ -33,10 +25,8 @@ export const fetchProducts = createAsyncThunk(
           params.append(key, value);
         }
       });
-      console.log("params", params.toString());
-      const response = await axios.get(
-        `https://e-commerce-backend-eight-umber.vercel.app/api/v1/products?${params.toString()}`,
-      );
+
+      const response = await axios.get(`/api/v1/products?${params.toString()}`);
 
       return response.data;
     } catch (error) {

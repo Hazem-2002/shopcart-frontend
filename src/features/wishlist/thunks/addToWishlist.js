@@ -8,7 +8,7 @@ export const addToWishlist = createAsyncThunk(
       const { accessToken, CSRFToken } = getState().auth;
 
       const response = await axios.patch(
-        `https://e-commerce-backend-eight-umber.vercel.app/api/v1/wishlists/${_id}/add`,
+        `/api/v1/wishlists/${_id}/add`,
         {},
         {
           headers: {

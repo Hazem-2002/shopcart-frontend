@@ -8,7 +8,7 @@ export const deleteFromWishlist = createAsyncThunk(
       const { accessToken, CSRFToken } = getState().auth;
 
       const response = await axios.patch(
-        `https://e-commerce-backend-eight-umber.vercel.app/api/v1/wishlists/${_id}/delete`,
+        `/api/v1/wishlists/${_id}/delete`,
         {},
         {
           headers: {

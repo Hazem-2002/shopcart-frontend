@@ -14,7 +14,7 @@ export const fetchSubcategories = createAsyncThunk(
       if (sort) params.append("sort", sort);
 
       const response = await axios.get(
-        `https://e-commerce-backend-eight-umber.vercel.app/api/v1/subcategories?${params.toString()}`,
+        `/api/v1/subcategories?${params.toString()}`,
       );
 
       return response.data;

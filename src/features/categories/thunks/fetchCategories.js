@@ -5,12 +5,13 @@ export const fetchCategories = createAsyncThunk(
   "categories/fetchCategories",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        "https://e-commerce-backend-eight-umber.vercel.app/api/v1/categories",
-      );
+      const response = await axios.get("/api/v1/categories");
+
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(
+        error.response?.data || { message: error.message },
+      );
     }
   },
 );

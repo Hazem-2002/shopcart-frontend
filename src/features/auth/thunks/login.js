@@ -5,8 +5,10 @@ export const login = createAsyncThunk(
   "auth/login",
   async (credentials, { rejectWithValue }) => {
     try {
+      const API_URL = "/api/v1";
+
       const loginResponse = await axios.post(
-        "https://e-commerce-backend-eight-umber.vercel.app/api/v1/auth/login",
+        `${API_URL}/auth/login`,
         credentials,
         {
           withCredentials: true,
@@ -15,25 +17,25 @@ export const login = createAsyncThunk(
 
       const { accessToken } = loginResponse.data.data;
 
-      const CSRFResponse = await axios.get(
-        "https://e-commerce-backend-eight-umber.vercel.app/api/v1/auth/csrf-token",
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          withCredentials: true,
+      const CSRFResponse = await axios.get(`${API_URL}/auth/csrf-token`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
         },
-      );
+        withCredentials: true,
+      });
+
+      const csrfToken = CSRFResponse.data.data.csrfToken;
 
       localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("csrfToken", CSRFResponse.data.data.csrfToken);
+      localStorage.setItem("csrfToken", csrfToken);
 
       return {
         ...loginResponse.data,
-        csrfToken: CSRFResponse.data.data.csrfToken,
+        csrfToken,
       };
     } catch (error) {
       console.log(error.response?.data);
+
       return rejectWithValue(
         error.response?.data || { message: error.message },
       );

@@ -18,7 +18,7 @@ export const fetchProductsPriceRange = createAsyncThunk(
       });
 
       const response = await axios.get(
-        `https://e-commerce-backend-eight-umber.vercel.app/api/v1/products/price-range?${params.toString()}`,
+        `/api/v1/products/price-range?${params.toString()}`,
       );
 
       return response.data;
