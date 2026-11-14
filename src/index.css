@@ -1,0 +1,386 @@
+@import "tailwindcss";
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* =========================================
+   LIGHT THEME
+========================================= */
+
+:root {
+  /* ===========================================
+      BACKGROUNDS
+  =========================================== */
+
+  --bg-main: #f8fafc;
+  --bg-sidebar: #ffffff;
+  --bg-navbar: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+
+  --bg-hover: #f1f5f9;
+  --bg-active: #e2e8f0;
+
+  /* ===========================================
+      PRIMARY COLORS
+  =========================================== */
+
+  --primary: #0d9488;
+  --primary-hover: #0f766e;
+  --primary-active: #115e59;
+
+  --primary-light: rgba(13, 148, 136, 0.1);
+  --primary-lighter: #ccfbf1;
+  --primary-dark: #115e59;
+
+  --secondary: #64748b;
+  --accent: #0891b2;
+
+  /* ===========================================
+      TEXT
+  =========================================== */
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-disabled: #94a3b8;
+  --text-placeholder: #94a3b8;
+
+  --text-white: #ffffff;
+
+  /* ===========================================
+      BORDER
+  =========================================== */
+
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --border-strong: #cbd5e1;
+  --border-focus: #0d9488;
+
+  --divider: #f1f5f9;
+
+  /* ===========================================
+      STATUS
+  =========================================== */
+
+  --success: #16a34a;
+  --success-bg: rgba(22, 163, 74, 0.1);
+
+  --warning: #d97706;
+  --warning-bg: rgba(217, 119, 6, 0.1);
+
+  --danger: #dc2626;
+  --danger-bg: rgba(220, 38, 38, 0.1);
+
+  --info: #2563eb;
+  --info-bg: rgba(37, 99, 235, 0.1);
+
+  /* ===========================================
+      SHADOWS
+  =========================================== */
+
+  --shadow-xs-value: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-sm-value: 0 4px 10px rgba(15, 23, 42, 0.06);
+  --shadow-md-value: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-lg-value: 0 20px 40px rgba(15, 23, 42, 0.1);
+
+  --shadow-primary-value:
+    0 0 0 1px rgba(13, 148, 136, 0.12), 0 0 18px rgba(13, 148, 136, 0.15);
+
+  /* ===========================================
+      RADIUS
+  =========================================== */
+
+  --radius-sm-value: 8px;
+  --radius-md-value: 12px;
+  --radius-lg-value: 18px;
+  --radius-xl-value: 24px;
+  --radius-full-value: 9999px;
+
+  /* ===========================================
+      SPACING
+  =========================================== */
+
+  --space-xs-value: 4px;
+  --space-sm-value: 8px;
+  --space-md-value: 16px;
+  --space-lg-value: 24px;
+  --space-xl-value: 32px;
+  --space-2xl-value: 48px;
+  --space-3xl-value: 64px;
+  --space-4xl-value: 72px;
+  --space-5xl-value: 96px;
+
+  --container-padding: 32px;
+  --card-padding: 24px;
+
+  /* ===========================================
+      TRANSITIONS
+  =========================================== */
+
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+  --transition-slow: 0.35s ease;
+
+  /* ===========================================
+      Z INDEX
+  =========================================== */
+
+  --z-dropdown-value: 1050;
+  --z-sticky-value: 1100;
+  --z-modal-value: 2000;
+  --z-toast-value: 3000;
+}
+
+/* =========================================
+   DARK THEME
+========================================= */
+
+:root.dark {
+  /* ===========================================
+      BACKGROUNDS
+  =========================================== */
+
+  --bg-main: #0b1120;
+  --bg-sidebar: #0f172a;
+  --bg-navbar: #111827;
+  --bg-surface: #151f32;
+  --bg-card: #111827;
+
+  --bg-hover: #1e293b;
+  --bg-active: #263449;
+
+  /* ===========================================
+      PRIMARY COLORS
+  =========================================== */
+
+  --primary: #2dd4bf;
+  --primary-hover: #5eead4;
+  --primary-active: #14b8a6;
+
+  --primary-light: rgba(45, 212, 191, 0.12);
+  --primary-lighter: rgba(45, 212, 191, 0.2);
+  --primary-dark: #0f766e;
+
+  --secondary: #94a3b8;
+  --accent: #22d3ee;
+
+  /* ===========================================
+      TEXT
+  =========================================== */
+
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-disabled: #64748b;
+  --text-placeholder: #64748b;
+
+  --text-white: #ffffff;
+
+  /* ===========================================
+      BORDER
+  =========================================== */
+
+  --border: #263449;
+  --border-light: #1e293b;
+  --border-strong: #334155;
+  --border-focus: #2dd4bf;
+
+  --divider: #1e293b;
+
+  /* ===========================================
+      STATUS
+  =========================================== */
+
+  --success: #4ade80;
+  --success-bg: rgba(74, 222, 128, 0.12);
+
+  --warning: #fbbf24;
+  --warning-bg: rgba(251, 191, 36, 0.12);
+
+  --danger: #f87171;
+  --danger-bg: rgba(248, 113, 113, 0.12);
+
+  --info: #60a5fa;
+  --info-bg: rgba(96, 165, 250, 0.12);
+
+  /* ===========================================
+      SHADOWS
+  =========================================== */
+
+  --shadow-xs-value: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-sm-value: 0 4px 10px rgba(0, 0, 0, 0.3);
+  --shadow-md-value: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg-value: 0 20px 40px rgba(0, 0, 0, 0.45);
+
+  --shadow-primary-value:
+    0 0 0 1px rgba(45, 212, 191, 0.15), 0 0 18px rgba(45, 212, 191, 0.18);
+}
+
+/* =========================================
+   TAILWIND THEME
+========================================= */
+
+@theme {
+  /* ===========================================
+      BACKGROUNDS
+  =========================================== */
+
+  --color-bg-main: var(--bg-main);
+  --color-bg-sidebar: var(--bg-sidebar);
+  --color-bg-navbar: var(--bg-navbar);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-card: var(--bg-card);
+
+  --color-bg-hover: var(--bg-hover);
+  --color-bg-active: var(--bg-active);
+
+  /* ===========================================
+      BRAND COLORS
+  =========================================== */
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-primary-light: var(--primary-light);
+  --color-primary-lighter: var(--primary-lighter);
+  --color-primary-dark: var(--primary-dark);
+
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+
+  /* ===========================================
+      TEXT
+  =========================================== */
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-disabled: var(--text-disabled);
+  --color-text-placeholder: var(--text-placeholder);
+  --color-text-white: var(--text-white);
+
+  /* ===========================================
+      BORDER
+  =========================================== */
+
+  --color-border: var(--border);
+  --color-border-light: var(--border-light);
+  --color-border-strong: var(--border-strong);
+  --color-border-focus: var(--border-focus);
+
+  --color-divider: var(--divider);
+
+  /* ===========================================
+      STATUS
+  =========================================== */
+
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+
+  --color-info: var(--info);
+  --color-info-bg: var(--info-bg);
+
+  /* ===========================================
+      SHADOWS
+  =========================================== */
+
+  --shadow-xs: var(--shadow-xs-value);
+  --shadow-sm: var(--shadow-sm-value);
+  --shadow-md: var(--shadow-md-value);
+  --shadow-lg: var(--shadow-lg-value);
+  --shadow-primary: var(--shadow-primary-value);
+
+  /* ===========================================
+      BORDER RADIUS
+  =========================================== */
+
+  --radius-sm: var(--radius-sm-value);
+  --radius-md: var(--radius-md-value);
+  --radius-lg: var(--radius-lg-value);
+  --radius-xl: var(--radius-xl-value);
+  --radius-full: var(--radius-full-value);
+
+  /* ===========================================
+      SPACING
+  =========================================== */
+
+  --spacing-xs: var(--space-xs-value);
+  --spacing-sm: var(--space-sm-value);
+  --spacing-md: var(--space-md-value);
+  --spacing-lg: var(--space-lg-value);
+  --spacing-xl: var(--space-xl-value);
+  --spacing-2xl: var(--space-2xl-value);
+  --spacing-3xl: var(--space-3xl-value);
+  --spacing-4xl: var(--space-4xl-value);
+  --spacing-5xl: var(--space-5xl-value);
+
+  --spacing-container: var(--container-padding);
+  --spacing-card: var(--card-padding);
+
+  /* ===========================================
+      Z INDEX
+  =========================================== */
+
+  --z-index-dropdown: var(--z-dropdown-value);
+  --z-index-sticky: var(--z-sticky-value);
+  --z-index-modal: var(--z-modal-value);
+  --z-index-toast: var(--z-toast-value);
+
+  /* ===========================================
+      BREAKPOINTS
+  =========================================== */
+
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* =========================================
+   CUSTOM SCROLLBAR
+========================================= */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary) var(--bg-main);
+}
+
+/* =========================================
+   SWIPER
+========================================= */
+
+.swiper .swiper-button-prev,
+.swiper .swiper-button-next {
+  width: 27px;
+  height: 27px;
+  color: var(--primary);
+  border-radius: 50%;
+  padding: 6px !important;
+  margin: 0 20px !important;
+  transition: all 0.3 ease;
+
+  &:hover {
+    background-color: var(--primary-active);
+    color: white;
+  }
+}
+
+/* =========================================
+   GLOBAL STYLES
+========================================= */
+
+body {
+  background-color: var(--bg-main);
+}

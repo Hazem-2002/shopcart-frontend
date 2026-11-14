@@ -1,0 +1,22 @@
+.product-swiper .swiper-button-prev,
+.product-swiper .swiper-button-next {
+  width: 27px;
+  height: 27px;
+  color: var(--primary);
+  border-radius: 50%;
+  visibility: hidden;
+  padding: 6px !important;
+  transition: all 0.3 ease;
+
+  &:hover {
+    background-color: var(--primary-active);
+    color: white;
+  }
+}
+
+.product-swiper .swiper-pagination-bullets .swiper-pagination-bullet {
+  background-color: var(--primary);
+  width: 6px;
+  height: 6px;
+  visibility: hidden;
+}
