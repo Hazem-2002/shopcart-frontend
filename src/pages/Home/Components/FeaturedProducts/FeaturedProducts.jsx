@@ -30,6 +30,7 @@ import {
   Eye,
   Funnel,
 } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 
 const FeaturedProducts = () => {
   const dispatch = useDispatch();
@@ -144,8 +145,8 @@ const FeaturedProducts = () => {
   }, [dispatch, priceRange]);
 
   // Apply selected filters
-  const applyFiltersHandler = (updatedFilters = filters) => {
-    dispatch(
+  const applyFiltersHandler = async (updatedFilters = filters) => {
+    await dispatch(
       fetchProducts({
         ...getSubcategoryFilters(),
         search: updatedFilters.search,
@@ -163,7 +164,7 @@ const FeaturedProducts = () => {
         limit,
         sort: updatedFilters.sort,
       }),
-    );
+    ).unwrap();
   };
 
   const sortOptions = [
@@ -383,29 +384,52 @@ const FeaturedProducts = () => {
           gridTemplateColumns: `repeat(${gridView === "list" ? 1 : gridView}, minmax(0, 1fr))`,
         }}
       >
-        {isLoading
-          ? Array.from({ length: 8 }).map((_, index) => (
-              <motion.div
-                key={`skeleton-${index}`}
-                custom={index}
-                variants={cardVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                <ProductCardSkeleton />
-              </motion.div>
-            ))
-          : products.map((product, index) => (
-              <motion.div
-                key={product._id + gridView}
-                custom={index}
-                variants={cardVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                <ProductCard product={product} />
-              </motion.div>
-            ))}
+        {isLoading ? (
+          Array.from({ length: 8 }).map((_, index) => (
+            <motion.div
+              key={`skeleton-${index}`}
+              custom={index}
+              variants={cardVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <ProductCardSkeleton />
+            </motion.div>
+          ))
+        ) : products.length > 0 ? (
+          products.map((product, index) => (
+            <motion.div
+              key={product._id + gridView}
+              custom={index}
+              variants={cardVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <ProductCard product={product} />
+            </motion.div>
+          ))
+        ) : (
+          <div className="col-span-full flex flex-col items-center justify-center px-4 py-12 text-center sm:py-16 md:py-20">
+            {/* Icon */}
+            <div className="mb-5 flex size-16 items-center justify-center rounded-2xl bg-primary/5 sm:size-20 sm:rounded-3xl">
+              <ShoppingBag
+                size={32}
+                strokeWidth={1.5}
+                className="text-primary sm:size-10"
+              />
+            </div>
+
+            {/* Content */}
+            <h3 className="text-lg font-bold tracking-tight text-primary sm:text-xl md:text-2xl">
+              No Products Available
+            </h3>
+
+            <p className="mt-2 text-xs leading-relaxed text-secondary sm:text-sm sm:leading-6">
+              There are no products to display at the moment. Please check back
+              soon!
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 // components
@@ -12,7 +12,8 @@ import Button from "../../../../components/Button";
 import { RotateCcw, SlidersHorizontal } from "lucide-react";
 
 const FilterPanel = ({ open, filters, setFilters, applyFiltersHandler }) => {
-  const { priceRange, isLoading } = useSelector((store) => store.products);
+  const { priceRange } = useSelector((store) => store.products);
+  const [loading, setLoading] = useState(false);
 
   const ResetFiltersHandler = () => {
     if (
@@ -175,8 +176,18 @@ const FilterPanel = ({ open, filters, setFilters, applyFiltersHandler }) => {
             variant="contained"
             startIcon={<SlidersHorizontal />}
             className="!h-10 sm:!h-9 !text-xs max-sm:!w-full"
-            loading={isLoading}
-            onClick={applyFiltersHandler}
+            loading={loading}
+            onClick={async () => {
+              setLoading(true);
+
+              try {
+                await applyFiltersHandler(filters);
+              } catch (error) {
+                console.error(error);
+              } finally {
+                setLoading(false);
+              }
+            }}
           >
             Apply Filters
           </Button>

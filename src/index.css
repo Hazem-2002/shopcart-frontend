@@ -365,16 +365,34 @@
 .swiper .swiper-button-next {
   width: 27px;
   height: 27px;
-  color: var(--primary);
-  border-radius: 50%;
   padding: 6px !important;
   margin: 0 20px !important;
-  transition: all 0.3 ease;
+  color: var(--primary);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
 
-  &:hover {
+/* Desktop / Mouse */
+@media (pointer: fine) {
+  .swiper .swiper-button-prev:hover,
+  .swiper .swiper-button-next:hover {
     background-color: var(--primary-active);
     color: white;
   }
+}
+
+/* Mobile / Touch */
+@media (pointer: coarse) {
+  .swiper .swiper-button-prev,
+  .swiper .swiper-button-next {
+    &:active {
+      color: var(--primary-active);
+    }
+  }
+}
+
+.swiper .swiper-pagination-bullets .swiper-pagination-bullet {
+  background-color: var(--primary);
 }
 
 /* =========================================

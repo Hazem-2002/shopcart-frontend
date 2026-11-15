@@ -24,7 +24,7 @@ const Home = () => {
         <Hero />
         <FeaturedProducts />
         <Button onClick={handleRefresh}>Refresh Token</Button>
-        <Button onClick={handleLogin}>Login</Button>v
+        <Button onClick={handleLogin}>Login</Button>
       </div>
     </>
   );

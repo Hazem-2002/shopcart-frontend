@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import {toast} from "react-toastify";
 
 export const refreshToken = createAsyncThunk(
   "auth/refreshToken",
@@ -16,6 +17,8 @@ export const refreshToken = createAsyncThunk(
       const { accessToken } = response.data.data;
 
       localStorage.setItem("accessToken", accessToken);
+
+      toast.success("Token refreshed successfully!");
 
       return response.data;
     } catch (error) {

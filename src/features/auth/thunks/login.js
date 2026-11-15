@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -28,6 +29,8 @@ export const login = createAsyncThunk(
 
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("csrfToken", csrfToken);
+
+      toast.success("Login successful!");
 
       return {
         ...loginResponse.data,
