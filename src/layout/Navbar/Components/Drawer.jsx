@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import Drawer from "@mui/material/Drawer";
 
@@ -25,7 +26,9 @@ import IconButton from "../../../components/IconButton";
 import Button from "../../../components/Button";
 
 const MenuDrawer = ({ open, toggleDrawer }) => {
+  const navigate = useNavigate();
   const categories = useSelector((store) => store.categories.categories);
+  const { isAuthenticated } = useSelector((store) => store.auth);
   const navigationLinks = [
     {
       name: "Home",
@@ -106,34 +109,48 @@ const MenuDrawer = ({ open, toggleDrawer }) => {
             {/* Header */}
             <div className="flex flex-col gap-1">
               <h3 className="text-sm font-bold text-text-primary">
-                Welcome to ShopCart!
+                {isAuthenticated ? "Welcome Back!" : "Welcome to ShopCart!"}
               </h3>
+
               <p className="text-xs text-text-secondary">
-                Join us for a better shopping experience.
+                {isAuthenticated
+                  ? "Enjoy your personalized shopping experience."
+                  : "Join us for a better shopping experience."}
               </p>
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col gap-2.5">
-              <Button
-                value="Create Account"
-                className="!h-10 !w-full !rounded-xl !capitalize !font-semibold"
-                // onClick={() => navigate("/register")}
-              />
+            {!isAuthenticated && (
+              <>
+                <div className="flex flex-col gap-2.5">
+                  <Button
+                    value="Create Account"
+                    className="!h-10 !w-full !rounded-xl !capitalize !font-semibold"
+                    // onClick={() => navigate("/register")}
+                  />
 
-              <Button
-                value="Sign In"
-                variant="outlined"
-                className="!h-10 !w-full !rounded-xl !capitalize !font-semibold"
-                // onClick={() => navigate("/login")}
-              />
-            </div>
+                  <Button
+                    value="Sign In"
+                    variant="outlined"
+                    className="!h-10 !w-full !rounded-xl !capitalize !font-semibold"
+                    onClick={() => navigate("/login")}
+                  />
+                </div>
 
-            {/* Footer */}
-            <p className="text-center text-[11px] leading-relaxed text-text-secondary">
-              Sign in to track your orders, manage your wishlist, and enjoy a
-              personalized shopping experience.
-            </p>
+                <p className="text-center text-[11px] leading-relaxed text-text-secondary">
+                  Sign in to track your orders, manage your wishlist, and enjoy
+                  a personalized shopping experience.
+                </p>
+              </>
+            )}
+
+            {isAuthenticated && (
+              <Button
+                value="My Account"
+                className="!h-10 !w-full !rounded-xl !capitalize !font-semibold"
+                // onClick={() => navigate("/profile")}
+              />
+            )}
           </div>
 
           {/* Navigation */}

@@ -157,9 +157,9 @@
       PRIMARY COLORS
   =========================================== */
 
-  --primary: #2dd4bf;
-  --primary-hover: #5eead4;
-  --primary-active: #14b8a6;
+  --primary: #0d9488;
+  --primary-hover: #0f766e;
+  --primary-active: #115e59;
 
   --primary-light: rgba(45, 212, 191, 0.12);
   --primary-lighter: rgba(45, 212, 191, 0.2);

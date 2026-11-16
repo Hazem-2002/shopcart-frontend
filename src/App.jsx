@@ -8,6 +8,7 @@ import { fetchCart } from "./features/cart/thunks/fetchCart.js";
 import { ToastContainer } from "react-toastify";
 
 const Layout = lazy(() => import("./layout/Layout.jsx"));
+const Login = lazy(() => import("./pages/Login/Login.jsx"));
 const Home = lazy(() => import("./pages/Home/Home.jsx"));
 
 const App = () => {
@@ -44,15 +45,15 @@ const App = () => {
             <Route path="checkout" element={<></>} />
             <Route path="profile" element={<></>} />
 
-            {/* Authentication */}
-            <Route path="login" element={<></>} />
-            <Route path="register" element={<></>} />
-            <Route path="forgot-password" element={<></>} />
-            <Route path="verify-otp" element={<></>} />
-
             {/* Product Details */}
             <Route path="product/:productId" element={<></>} />
           </Route>
+
+          {/* Authentication */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<></>} />
+          <Route path="/forgot-password" element={<></>} />
+          <Route path="/verify-otp" element={<></>} />
         </Routes>
       </Suspense>
 

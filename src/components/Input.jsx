@@ -26,12 +26,12 @@ const Input = ({
   const hasEndAdornment = endAdornment || endIcon;
 
   return (
-    <div className="flex flex-col gap-2 w-full min-w-0">
+    <div className="relative flex flex-col gap-2 w-full min-w-0">
       {/* Label */}
       {label && (
         <label
           htmlFor={id}
-          className={`block max-w-full text-sm font-medium text-text-primary break-words ${labelClassName}`}
+          className={`block max-w-full text-xs font-medium text-text-primary break-words sm:text-sm ${labelClassName}`}
         >
           {label}
         </label>
@@ -49,13 +49,16 @@ const Input = ({
         className={`
           box-border !w-full !min-w-0 !h-10.5
           !bg-primary/2 dark:!bg-primary/4 !px-3 !py-2.5
-          !border !border-border !rounded-md
+          !border !border-border rounded-md
           !text-sm !text-text-primary
           [&_.MuiInputBase-input]:!min-w-0
           [&_.MuiInputBase-input]:!w-full
           [&_.MuiInputBase-input]:!p-0
           [&_.MuiInputBase-input]:!text-ellipsis
-          [&_.MuiInputBase-input]:placeholder:!text-text-primary/90
+          [&_.MuiInputBase-input]:placeholder:!opacity-100
+          [&_.MuiInputBase-input]:placeholder:!text-text-placeholder
+          [&_.MuiInputBase-input]:placeholder:!capitalize
+
           focus-within:!ring-2
           focus-within:!ring-primary/30
           dark:focus-within:!ring-primary/70
@@ -65,7 +68,10 @@ const Input = ({
         `}
         startAdornment={
           hasStartAdornment ? (
-            <InputAdornment position="start" className="!mr-2 !shrink-0">
+            <InputAdornment
+              position="start"
+              className="!mr-2 !shrink-0 px-0.75"
+            >
               <span className="flex items-center shrink-0">
                 {startAdornment ||
                   (search ? (
@@ -78,7 +84,8 @@ const Input = ({
                     React.cloneElement(startIcon, {
                       size: iconSize,
                       className:
-                        "text-text-secondary transition-colors shrink-0",
+                        startIcon.props.className ||
+                        "shrink-0 text-secondary/55",
                     })
                   ))}
               </span>
@@ -87,12 +94,13 @@ const Input = ({
         }
         endAdornment={
           hasEndAdornment ? (
-            <InputAdornment position="end" className="!ml-2 !shrink-0">
+            <InputAdornment position="end" className="!mr-2 !shrink-0">
               <span className="flex items-center shrink-0">
                 {endAdornment ||
                   React.cloneElement(endIcon, {
                     size: iconSize,
-                    className: "text-text-secondary transition-colors shrink-0",
+                    className:
+                      endIcon.props.className || "shrink-0 text-secondary/55",
                   })}
               </span>
             </InputAdornment>
@@ -104,10 +112,12 @@ const Input = ({
       {helperText && (
         <p
           className={`
-            max-w-full text-xs leading-relaxed break-words
-            ${error ? "text-red-500" : "text-text-secondary"}
-            ${helperTextClassName}
-          `}
+      absolute top-full left-0 mt-1
+      max-w-full text-xs leading-relaxed break-words
+      z-10
+      ${error ? "text-red-500" : "text-text-secondary"}
+      ${helperTextClassName}
+    `}
         >
           {helperText}
         </p>

@@ -32,7 +32,7 @@ const CustomButton = ({
       }
       disabled={disabled}
       fullWidth={fullWidth}
-      className={`!rounded-lg !px-4 !capitalize !py-2 !font-semibold !transition !shrink-0 ${
+      className={`!rounded-lg !px-4 !capitalize !py-2 !text-xs sm:!text-sm !font-semibold !transition !shrink-0 ${
         variant === "contained"
           ? "!bg-gradient-to-tr from-primary hover:from-primary-active to-primary-active !text-white/95"
           : variant === "outlined"
