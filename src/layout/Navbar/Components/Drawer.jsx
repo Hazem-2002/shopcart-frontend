@@ -126,7 +126,7 @@ const MenuDrawer = ({ open, toggleDrawer }) => {
                   <Button
                     value="Create Account"
                     className="!h-10 !w-full !rounded-xl !capitalize !font-semibold"
-                    // onClick={() => navigate("/register")}
+                    onClick={() => navigate("/register")}
                   />
 
                   <Button

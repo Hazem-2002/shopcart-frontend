@@ -83,7 +83,7 @@ const WelcomeSection = () => {
         {/* Bottom Text */}
         <div className="grow flex flex-col justify-end">
           <div className="h-px w-full bg-text-white/20" />
-          <p className="mt-5 text-[10px] font-semibold tracking-[0.15em] text-text-white/65 lg:text-xs lg:tracking-[0.18em]">
+          <p className="mt-5 text-[10px] text-center font-semibold tracking-[0.15em] text-text-white/65 lg:text-xs lg:tracking-[0.18em]">
             YOUR STYLE. YOUR CHOICE. YOUR CART.
           </p>
         </div>

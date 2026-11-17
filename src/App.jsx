@@ -9,7 +9,11 @@ import { ToastContainer } from "react-toastify";
 
 const Layout = lazy(() => import("./layout/Layout.jsx"));
 const Login = lazy(() => import("./pages/Login/Login.jsx"));
+const Register = lazy(() => import("./pages/Register/Register.jsx"));
 const Home = lazy(() => import("./pages/Home/Home.jsx"));
+const EmailVerification = lazy(
+  () => import("./pages/EmailVerification/EmailVerification.jsx"),
+);
 
 const App = () => {
   const dispatch = useDispatch();
@@ -51,9 +55,9 @@ const App = () => {
 
           {/* Authentication */}
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<></>} />
+          <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<></>} />
-          <Route path="/verify-otp" element={<></>} />
+          <Route path="/verify-otp" element={<EmailVerification />} />
         </Routes>
       </Suspense>
 

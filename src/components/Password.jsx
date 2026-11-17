@@ -6,7 +6,7 @@ import Input from "./Input";
 
 const Password = ({
   startIcon = false,
-  iconSize = 20,
+  iconSize = 17,
   endAdornment,
   value,
   ...props
@@ -45,13 +45,13 @@ const Password = ({
           >
             {showPassword ? (
               <Eye
-                size={iconSize}
+                size={18}
                 strokeWidth={1.8}
                 className="text-text-muted/50 hover:text-text-muted/70"
               />
             ) : (
               <EyeOff
-                size={iconSize}
+                size={18}
                 strokeWidth={1.8}
                 className="text-text-muted/50 hover:text-text-muted/70"
               />

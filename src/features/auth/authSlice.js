@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { login } from "./thunks/login";
+import { register } from "./thunks/register";
 import { refreshToken } from "./thunks/refreshToken";
+import { verifyEmail } from "./thunks/verifyEmail";
 
 const initialState = {
   user: null,
@@ -26,6 +28,25 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Register
+      .addCase(register.pending, (state) => {
+        state.isLoading = true;
+        state.success = false;
+        state.error = null;
+      })
+      .addCase(register.fulfilled, (state) => {
+        state.isLoading = false;
+        state.success = true;
+        state.error = null;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.isLoading = false;
+        state.success = false;
+        state.isAuthenticated = false;
+        state.error = action.payload;
+      })
+
+      // Login
       .addCase(login.pending, (state) => {
         state.isLoading = true;
         state.success = false;
@@ -62,6 +83,23 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.success = false;
         state.isAuthenticated = false;
+        state.error = action.payload;
+      })
+
+      // Verify Email
+      .addCase(verifyEmail.pending, (state) => {
+        state.isLoading = true;
+        state.success = false;
+        state.error = null;
+      })
+      .addCase(verifyEmail.fulfilled, (state) => {
+        state.isLoading = false;
+        state.success = true;
+        state.error = null;
+      })
+      .addCase(verifyEmail.rejected, (state, action) => {
+        state.isLoading = false;
+        state.success = false;
         state.error = action.payload;
       });
   },

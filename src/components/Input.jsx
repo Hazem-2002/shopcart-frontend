@@ -31,7 +31,7 @@ const Input = ({
       {label && (
         <label
           htmlFor={id}
-          className={`block max-w-full text-xs font-medium text-text-primary break-words sm:text-sm ${labelClassName}`}
+          className={`block max-w-full text-xs font-medium text-text-primary/80 break-words sm:text-sm ${labelClassName}`}
         >
           {label}
         </label>
@@ -60,10 +60,8 @@ const Input = ({
           [&_.MuiInputBase-input]:placeholder:!capitalize
 
           focus-within:!ring-2
-          focus-within:!ring-primary/30
-          dark:focus-within:!ring-primary/70
           !transition !duration-200
-          ${error ? "!border-red-500 focus-within:!ring-red-500/20" : ""}
+          ${error ? "!ring-2 !ring-danger" : "focus-within:!ring-primary/30 dark:focus-within:!ring-primary/70"}
           ${className}
         `}
         startAdornment={
@@ -112,10 +110,9 @@ const Input = ({
       {helperText && (
         <p
           className={`
-      absolute top-full left-0 mt-1
+      absolute top-full left-0 z-10 mt-0.5
       max-w-full text-xs leading-relaxed break-words
-      z-10
-      ${error ? "text-red-500" : "text-text-secondary"}
+      ${error ? "text-danger" : "text-text-secondary"}
       ${helperTextClassName}
     `}
         >

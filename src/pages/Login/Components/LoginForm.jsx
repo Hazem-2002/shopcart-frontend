@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Mail, Lock, ArrowRight } from "lucide-react";
 
 import Input from "../../../components/Input";
 import Password from "../../../components/Password";
 import Button from "../../../components/Button";
+import Checkbox from "../../../components/Checkbox";
 
 // Thunks & Actions
 import { login } from "../../../features/auth/thunks/login";
@@ -24,6 +25,7 @@ const LoginForm = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    rememberMe: false,
   });
 
   const [errors, setErrors] = useState({ email: "", password: "" });
@@ -52,7 +54,9 @@ const LoginForm = () => {
         }),
       ).unwrap();
 
-      navigate("/", { replace: true });
+      setTimeout(() => {
+        navigate("/", { replace: true });
+      }, 1800);
 
       toast.success("Login successful!");
     } catch (error) {
@@ -82,7 +86,7 @@ const LoginForm = () => {
 
       {/* Form */}
       <form className="space-y-4.5" onSubmit={handleSubmit}>
-        <div className="space-y-6.5">
+        <div className="space-y-6">
           <Input
             id="email"
             label="Email Address"
@@ -120,26 +124,20 @@ const LoginForm = () => {
               setFormData({ ...formData, password: event.target.value });
             }}
           />
-        </div>
 
-        {/* Remember Me & Forgot Password */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-2.5">
-          <label className="flex cursor-pointer items-center gap-2">
-            <input
-              type="checkbox"
-              className="size-3 sm:size-3.5 cursor-pointer accent-primary"
-            />
-            <span className="text-xs text-secondary sm:text-sm">
-              Remember me
-            </span>
-          </label>
-
-          <button
-            type="button"
-            className="text-xs font-semibold text-primary transition-colors cursor-pointer hover:text-primary-hover sm:text-sm"
-          >
-            Forgot Password?
-          </button>
+          {/* Remember Me & Forgot Password */}
+          <Checkbox
+            id="remember-me"
+            label={
+              <span className="text-xs text-secondary sm:text-sm">
+                Remember me
+              </span>
+            }
+            checked={formData.rememberMe}
+            onChange={(event) => {
+              setFormData({ ...formData, rememberMe: event.target.checked });
+            }}
+          />
         </div>
 
         {/* Submit */}
@@ -197,14 +195,14 @@ const LoginForm = () => {
       </button>
 
       {/* Register */}
-      <p className="mt-4 max-xs:mb-4 text-center text-xs text-secondary sm:text-sm">
+      <p className="mt-4.5 max-xs:mb-2 text-center text-xs text-secondary sm:text-sm">
         Don't have an account?
-        <button
-          type="button"
+        <Link
+          to="/register"
           className="ml-1.5 font-bold text-primary transition-colors cursor-pointer hover:text-primary-hover"
         >
           Create Account
-        </button>
+        </Link>
       </p>
     </section>
   );
