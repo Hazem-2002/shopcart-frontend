@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Search, Heart, ShoppingCart, UserRound, Menu } from "lucide-react";
+import { Search, Heart, ShoppingCart, Menu } from "lucide-react";
 
 import Logo from "./Components/logo";
-import Button from "../../components/Button";
-import Badge from "../../components/Badge";
-import IconButton from "../../components/IconButton";
+// import Button from "../../components/Button";
+import Badge from "../../components/UI/Badge";
+import IconButton from "../../components/UI/IconButton";
 import MenuDrawer from "./Components/Drawer";
+import NavbarAuth from "./Components/NavbarAuth";
 
 const links = [
   { name: "Home", href: "/" },
@@ -114,13 +115,7 @@ const Header = () => {
               </div>
 
               {/* Login */}
-              <Button
-                value="Login"
-                startIcon={<UserRound />}
-                iconSize={15}
-                variant="contained"
-                className="max-lg:!hidden !shrink-0"
-              />
+              <NavbarAuth />
             </div>
           </div>
         </div>

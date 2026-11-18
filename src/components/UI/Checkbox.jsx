@@ -15,7 +15,7 @@ const Checkbox = ({
   ...props
 }) => {
   return (
-    <div className="relative flex w-full min-w-0 flex-col">
+    <div className="relative flex min-w-0 flex-col">
       {/* Checkbox & Label */}
       <div className="flex items-start gap-2">
         <input

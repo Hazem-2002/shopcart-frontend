@@ -5,13 +5,15 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { Mail, Lock, ArrowRight } from "lucide-react";
 
-import Input from "../../../components/Input";
-import Password from "../../../components/Password";
-import Button from "../../../components/Button";
-import Checkbox from "../../../components/Checkbox";
+import Input from "../../../components/UI/Input";
+import Password from "../../../components/UI/Password";
+import Button from "../../../components/UI/Button";
+import Checkbox from "../../../components/UI/Checkbox";
 
 // Thunks & Actions
 import { login } from "../../../features/auth/thunks/login";
+import { fetchCart } from "../../../features/cart/thunks/fetchCart";
+import { fetchWishlist } from "../../../features/wishlist/thunks/fetchWishlist.js";
 
 // utils
 import { validateEmail, validatePassword } from "../../../utils/validation";
@@ -54,9 +56,11 @@ const LoginForm = () => {
         }),
       ).unwrap();
 
-      setTimeout(() => {
-        navigate("/", { replace: true });
-      }, 1800);
+      // Fetch cart and wishlist in background
+      dispatch(fetchCart());
+      dispatch(fetchWishlist());
+
+      navigate("/", { replace: true });
 
       toast.success("Login successful!");
     } catch (error) {
@@ -126,18 +130,28 @@ const LoginForm = () => {
           />
 
           {/* Remember Me & Forgot Password */}
-          <Checkbox
-            id="remember-me"
-            label={
-              <span className="text-xs text-secondary sm:text-sm">
-                Remember me
-              </span>
-            }
-            checked={formData.rememberMe}
-            onChange={(event) => {
-              setFormData({ ...formData, rememberMe: event.target.checked });
-            }}
-          />
+          <div className="flex flex-wrap items-center -mt-2 justify-between gap-3 pt-2.5">
+            <Checkbox
+              id="remember-me"
+              label={
+                <span className="text-xs text-secondary sm:text-sm">
+                  Remember me
+                </span>
+              }
+              checked={formData.rememberMe}
+              onChange={(event) => {
+                setFormData({ ...formData, rememberMe: event.target.checked });
+              }}
+            />
+
+            <Link
+              to="/forgot-password"
+              type="button"
+              className="text-xs font-semibold text-primary transition-colors cursor-pointer hover:text-primary-hover sm:text-sm"
+            >
+              Forgot Password?
+            </Link>
+          </div>
         </div>
 
         {/* Submit */}

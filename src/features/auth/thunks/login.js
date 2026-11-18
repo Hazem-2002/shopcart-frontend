@@ -1,41 +1,26 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { loginRequest, getCSRFTokenRequest } from "../../../api/auth/auth";
 
 export const login = createAsyncThunk(
   "auth/login",
   async (credentials, { rejectWithValue }) => {
     try {
-      const API_URL = "/api/v1";
+      const loginResponse = await loginRequest(credentials);
 
-      const loginResponse = await axios.post(
-        `${API_URL}/auth/login`,
-        credentials,
-        {
-          withCredentials: true,
-        },
-      );
+      const { accessToken } = loginResponse.data;
 
-      const { accessToken } = loginResponse.data.data;
+      const CSRFResponse = await getCSRFTokenRequest(accessToken);
 
-      const CSRFResponse = await axios.get(`${API_URL}/auth/csrf-token`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        withCredentials: true,
-      });
-
-      const csrfToken = CSRFResponse.data.data.csrfToken;
+      const CSRFToken = CSRFResponse.data.csrfToken;
 
       localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("csrfToken", csrfToken);
+      localStorage.setItem("CSRFToken", CSRFToken);
 
       return {
-        ...loginResponse.data,
-        csrfToken,
+        ...loginResponse,
+        CSRFToken,
       };
     } catch (error) {
-      console.log(error.response?.data);
-
       return rejectWithValue(
         error.response?.data || { message: error.message },
       );

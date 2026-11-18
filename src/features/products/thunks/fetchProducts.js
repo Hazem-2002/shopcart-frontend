@@ -1,5 +1,5 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { fetchProductsRequest } from "../../../api/product/product";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
@@ -26,9 +26,9 @@ export const fetchProducts = createAsyncThunk(
         }
       });
 
-      const response = await axios.get(`/api/v1/products?${params.toString()}`);
+      const response = await fetchProductsRequest(params);
 
-      return response.data;
+      return response;
     } catch (error) {
       return rejectWithValue(
         error.response?.data || { message: error.message },

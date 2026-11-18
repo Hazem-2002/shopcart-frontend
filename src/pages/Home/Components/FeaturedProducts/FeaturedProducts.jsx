@@ -10,10 +10,10 @@ import { fetchProducts } from "../../../../features/products/thunks/fetchProduct
 import { fetchProductsPriceRange } from "../../../../features/products/thunks/fetchProductsPriceRange";
 
 // Components
-import Select from "../../../../components/Select";
-import ProductCard from "../../../../components/ProductCard/productCard";
-import ProductCardSkeleton from "../../../../components/ProductCard/ProductCardSkeleton";
-import Button from "../../../../components/Button";
+import Select from "../../../../components/UI/Select";
+import ProductCard from "../../../../components/UI/ProductCard/productCard";
+import ProductCardSkeleton from "../../../../components/UI/ProductCard/ProductCardSkeleton";
+import Button from "../../../../components/UI/Button";
 import FilterPanel from "./FilterPanel";
 
 // Framer Motion
@@ -35,13 +35,28 @@ import { ShoppingBag } from "lucide-react";
 const FeaturedProducts = () => {
   const dispatch = useDispatch();
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
-  const { subcategories } = useSelector((store) => store.subcategories);
-  const { products, count, priceRange, isLoading } = useSelector(
-    (store) => store.products,
+  const { subcategories, isLoading: subcategoriesLoading } = useSelector(
+    (store) => store.subcategories,
   );
+  const {
+    products,
+    count,
+    priceRange,
+    isLoading: productsLoading,
+  } = useSelector((store) => store.products);
 
   // Set the limit for the number of products to fetch
   const limit = 10;
+
+  // Set the limit for the number of subcategories to fetch based on the window width
+  const subcategoryLimit =
+    window.innerWidth < 350
+      ? 3
+      : window.innerWidth < 768
+        ? 4
+        : window.innerWidth < 1024
+          ? 5
+          : 6;
 
   // Determine the default grid view based on the window width
   const getDefaultGridView = () => {
@@ -74,6 +89,28 @@ const FeaturedProducts = () => {
 
     return { subcategories: selectedSubcategory };
   }, [selectedSubcategory, subcategories]);
+
+  // Apply selected filters
+  const applyFiltersHandler = (updatedFilters = filters) =>
+    dispatch(
+      fetchProducts({
+        ...getSubcategoryFilters(),
+        search: updatedFilters.search,
+        "priceAfterDiscount[gte]": updatedFilters.priceRange[0],
+        "priceAfterDiscount[lte]": updatedFilters.priceRange[1],
+        isFeatured:
+          updatedFilters.featured === "all"
+            ? undefined
+            : updatedFilters.featured === "true",
+        ...(updatedFilters.stock === "all"
+          ? {}
+          : updatedFilters.stock === "in-stock"
+            ? { "quantity[gte]": 1 }
+            : { "quantity[eq]": 0 }),
+        limit,
+        sort: updatedFilters.sort,
+      }),
+    );
 
   // Update grid view on window resize
   useEffect(() => {
@@ -121,17 +158,10 @@ const FeaturedProducts = () => {
   useEffect(() => {
     if (!selectedSubcategory) return;
 
-    const subcategoryFilters = getSubcategoryFilters();
+    applyFiltersHandler({ ...filters, priceRange: [null, null] });
 
-    dispatch(
-      fetchProducts({
-        ...subcategoryFilters,
-        sort: filters.sort,
-        limit,
-      }),
-    );
+    dispatch(fetchProductsPriceRange(getSubcategoryFilters()));
 
-    dispatch(fetchProductsPriceRange(subcategoryFilters));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, selectedSubcategory]);
 
@@ -143,29 +173,6 @@ const FeaturedProducts = () => {
       priceRange,
     }));
   }, [dispatch, priceRange]);
-
-  // Apply selected filters
-  const applyFiltersHandler = async (updatedFilters = filters) => {
-    await dispatch(
-      fetchProducts({
-        ...getSubcategoryFilters(),
-        search: updatedFilters.search,
-        "priceAfterDiscount[gte]": updatedFilters.priceRange[0],
-        "priceAfterDiscount[lte]": updatedFilters.priceRange[1],
-        isFeatured:
-          updatedFilters.featured === "all"
-            ? undefined
-            : updatedFilters.featured === "true",
-        ...(updatedFilters.stock === "all"
-          ? {}
-          : updatedFilters.stock === "in-stock"
-            ? { "quantity[gte]": 1 }
-            : { "quantity[eq]": 0 }),
-        limit,
-        sort: updatedFilters.sort,
-      }),
-    ).unwrap();
-  };
 
   const sortOptions = [
     { value: "-createdAt", label: "Newest" },
@@ -240,34 +247,45 @@ const FeaturedProducts = () => {
         <div className="flex flex-col gap-6">
           {/* Subcategory Filters */}
           <div className="flex flex-wrap items-center gap-2">
-            {subcategories.map((subcategory) => (
-              <button
-                key={subcategory._id}
-                onClick={() => setSelectedSubcategory(subcategory._id)}
-                className={`cursor-pointer rounded-full border px-4 py-2 text-xs font-semibold capitalize transition duration-200 ${
-                  selectedSubcategory === subcategory._id
-                    ? "border-primary bg-primary text-white shadow-sm"
-                    : "border-border bg-surface text-text-secondary hover:border-primary hover:bg-primary/10 hover:text-primary"
-                }`}
-              >
-                {subcategory.name}
-              </button>
-            ))}
+            {subcategoriesLoading ? (
+              Array.from({ length: subcategoryLimit }).map((_, index) => (
+                <div
+                  key={`skeleton-subcategory-${index}`}
+                  className="h-8 w-25 animate-pulse rounded-full bg-bg-hover"
+                />
+              ))
+            ) : (
+              <>
+                {subcategories.map((subcategory) => (
+                  <button
+                    key={subcategory._id}
+                    onClick={() => setSelectedSubcategory(subcategory._id)}
+                    className={`cursor-pointer rounded-full border px-4 py-2 text-xs font-semibold capitalize transition duration-200 ${
+                      selectedSubcategory === subcategory._id
+                        ? "border-primary bg-primary text-white shadow-sm"
+                        : "border-border bg-surface text-text-secondary hover:border-primary hover:bg-primary/10 hover:text-primary"
+                    }`}
+                  >
+                    {subcategory.name}
+                  </button>
+                ))}
 
-            <button
-              onClick={() => setSelectedSubcategory("others")}
-              className={`cursor-pointer rounded-full border px-4 py-2 text-xs font-semibold capitalize transition duration-200 ${
-                selectedSubcategory === "others"
-                  ? "border-primary bg-primary text-white shadow-sm"
-                  : "border-border bg-surface text-text-secondary hover:border-primary hover:bg-primary/10 hover:text-primary"
-              }`}
-            >
-              Others
-            </button>
+                <button
+                  onClick={() => setSelectedSubcategory("others")}
+                  className={`cursor-pointer rounded-full border px-4 py-2 text-xs font-semibold capitalize transition duration-200 ${
+                    selectedSubcategory === "others"
+                      ? "border-primary bg-primary text-white shadow-sm"
+                      : "border-border bg-surface text-text-secondary hover:border-primary hover:bg-primary/10 hover:text-primary"
+                  }`}
+                >
+                  Others
+                </button>
+              </>
+            )}
 
             <Link
               to="/shop"
-              className="md:ml-auto shrink-0 rounded-full border border-primary px-3 py-1 sm:px-4 text-xs sm:text-sm font-semibold capitalize text-primary transition hover:border-primary-active hover:bg-primary-light hover:text-primary-active"
+              className="md:ml-auto shrink-0 rounded-full border border-primary px-3 py-1 sm:px-4 text-xs sm:text-sm font-semibold capitalize text-primary transition hover:border-primary-active hover:bg-primary-light hover:text-primary"
             >
               See All
             </Link>
@@ -384,7 +402,7 @@ const FeaturedProducts = () => {
           gridTemplateColumns: `repeat(${gridView === "list" ? 1 : gridView}, minmax(0, 1fr))`,
         }}
       >
-        {isLoading ? (
+        {productsLoading || subcategoriesLoading ? (
           Array.from({ length: 8 }).map((_, index) => (
             <motion.div
               key={`skeleton-${index}`}

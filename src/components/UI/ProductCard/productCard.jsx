@@ -12,12 +12,12 @@ import QuickViewModal from "../QuickViewModal/QuickViewModal";
 import Button from "../Button";
 
 // Thunks
-import { addToWishlist } from "../../features/wishlist/thunks/addToWishlist";
-import { deleteFromWishlist } from "../../features/wishlist/thunks/deleteFromWishlist";
-import { optimisticToggleWishlist } from "../../features/wishlist/wishlistSlice";
+import { addToWishlist } from "../../../features/wishlist/thunks/addToWishlist";
+import { deleteFromWishlist } from "../../../features/wishlist/thunks/deleteFromWishlist";
+import { optimisticToggleWishlist } from "../../../features/wishlist/wishlistSlice";
 
 // Utils
-import { formatPrice } from "../../utils/formatPrice";
+import { formatPrice } from "../../../utils/formatPrice";
 
 import {
   Heart,

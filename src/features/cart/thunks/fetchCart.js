@@ -1,24 +1,17 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { fetchCartRequest } from "../../../api/cart/cart";
 
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
-  async (_, { rejectWithValue, getState }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const { accessToken } = getState().auth;
+      const response = await fetchCartRequest();
 
-      const response = await axios.get("/api/v1/carts/my-cart", {
-        headers: {
-          Authorization: `Bearer ${
-            accessToken || localStorage.getItem("accessToken")
-          }`,
-        },
-        withCredentials: true,
-      });
-
-      return response.data;
+      return response;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(
+        error.response?.data || { message: error.message },
+      );
     }
   },
 );

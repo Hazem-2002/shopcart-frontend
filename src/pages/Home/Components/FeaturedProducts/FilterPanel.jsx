@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 
 // components
 import { Collapse } from "@mui/material";
-import Input from "../../../../components/Input";
-import PriceRangeSlider from "../../../../components/Slider";
-import NumericStepper from "../../../../components/NumericStepper";
-import Select from "../../../../components/Select";
-import Button from "../../../../components/Button";
+import Input from "../../../../components/UI/Input";
+import PriceRangeSlider from "../../../../components/UI/Slider";
+import NumericStepper from "../../../../components/UI/NumericStepper";
+import Select from "../../../../components/UI/Select";
+import Button from "../../../../components/UI/Button";
 
 import { RotateCcw, SlidersHorizontal } from "lucide-react";
 

@@ -11,7 +11,7 @@ import "swiper/css/effect-fade";
 
 import { ArrowRight } from "lucide-react";
 
-import Button from "../../../components/Button";
+import Button from "../../../components/UI/Button";
 
 const Hero = () => {
   const [viewport, setViewport] = useState({

@@ -1,14 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { login } from "./thunks/login";
 import { register } from "./thunks/register";
-import { refreshToken } from "./thunks/refreshToken";
 import { verifyEmail } from "./thunks/verifyEmail";
+import { forgotPassword } from "./thunks/forgotPassword";
+import { verifyResetOTP } from "./thunks/verifyResetOTP";
+import { resetPassword } from "./thunks/resetPassword";
+import { fetchCurrentUser } from "./thunks/fetchCurrentUser";
+import { logout } from "./thunks/logout";
 
 const initialState = {
   user: null,
   isAuthenticated: false,
-  accessToken: null,
-  CSRFToken: null,
+  accessToken: localStorage.getItem("accessToken") || null,
+  CSRFToken: localStorage.getItem("CSRFToken") || null,
   isLoading: false,
   success: false,
   error: null,
@@ -18,16 +22,31 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout: (state) => {
-      state.user = null;
-      state.isAuthenticated = false;
-      state.accessToken = null;
-      state.success = false;
-      state.error = null;
+    setAccessToken: (state, accessToken) => {
+      state.accessToken = accessToken;
     },
   },
   extraReducers: (builder) => {
     builder
+
+      // Fetch Current User
+      .addCase(fetchCurrentUser.pending, (state) => {
+        state.isLoading = true;
+        state.success = false;
+        state.error = null;
+      })
+      .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.success = true;
+        state.user = action.payload.data.user;
+        state.isAuthenticated = true;
+      })
+      .addCase(fetchCurrentUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.success = false;
+        state.error = action.payload;
+      })
+
       // Register
       .addCase(register.pending, (state) => {
         state.isLoading = true;
@@ -67,22 +86,26 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Refresh Token
-      .addCase(refreshToken.pending, (state) => {
+      // Logout
+      .addCase(logout.pending, (state) => {
         state.isLoading = true;
         state.success = false;
         state.error = null;
       })
-      .addCase(refreshToken.fulfilled, (state, action) => {
+      .addCase(logout.fulfilled, (state) => {
         state.isLoading = false;
         state.success = true;
-        state.isAuthenticated = true;
-        state.accessToken = action.payload.data.accessToken;
+        state.error = null;
+        state.isAuthenticated = false;
+        state.user = null;
+        state.accessToken = null;
+        state.CSRFToken = null;
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("CSRFToken");
       })
-      .addCase(refreshToken.rejected, (state, action) => {
+      .addCase(logout.rejected, (state, action) => {
         state.isLoading = false;
         state.success = false;
-        state.isAuthenticated = false;
         state.error = action.payload;
       })
 
@@ -101,9 +124,60 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.success = false;
         state.error = action.payload;
+      })
+
+      // Forgot Password
+      .addCase(forgotPassword.pending, (state) => {
+        state.isLoading = true;
+        state.success = false;
+        state.error = null;
+      })
+      .addCase(forgotPassword.fulfilled, (state) => {
+        state.isLoading = false;
+        state.success = true;
+        state.error = null;
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.success = false;
+        state.error = action.payload;
+      })
+
+      // Verify Reset OTP
+      .addCase(verifyResetOTP.pending, (state) => {
+        state.isLoading = true;
+        state.success = false;
+        state.error = null;
+      })
+      .addCase(verifyResetOTP.fulfilled, (state) => {
+        state.isLoading = false;
+        state.success = true;
+        state.error = null;
+      })
+      .addCase(verifyResetOTP.rejected, (state, action) => {
+        state.isLoading = false;
+        state.success = false;
+        state.error = action.payload;
+      })
+
+      // Reset Password
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true;
+        state.success = false;
+        state.error = null;
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.isLoading = false;
+        state.success = true;
+        state.error = null;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.success = false;
+        state.error = action.payload;
       });
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { setAccessToken } = authSlice.actions;
 export default authSlice.reducer;

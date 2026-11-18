@@ -22,8 +22,8 @@ import {
 import { NavLink } from "react-router-dom";
 
 import Logo from "./logo";
-import IconButton from "../../../components/IconButton";
-import Button from "../../../components/Button";
+import IconButton from "../../../components/UI/IconButton";
+import Button from "../../../components/UI/Button";
 
 const MenuDrawer = ({ open, toggleDrawer }) => {
   const navigate = useNavigate();

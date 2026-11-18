@@ -11,10 +11,10 @@ import {
   Phone,
 } from "lucide-react";
 
-import Input from "../../../components/Input";
-import Password from "../../../components/Password";
-import Button from "../../../components/Button";
-import Checkbox from "../../../components/Checkbox";
+import Input from "../../../components/UI/Input";
+import Password from "../../../components/UI/Password";
+import Button from "../../../components/UI/Button";
+import Checkbox from "../../../components/UI/Checkbox";
 
 // Thunks & Actions
 import { register } from "../../../features/auth/thunks/register";
@@ -91,7 +91,7 @@ const LoginForm = () => {
       });
 
       setTimeout(() => {
-        navigate("/verify-otp", { replace: true });
+        navigate("/email-verification", { replace: true });
       }, 1800);
     } catch (error) {
       console.error("Register Error:", error);

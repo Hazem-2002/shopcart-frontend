@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+// Icons
 import { ArrowLeft, RefreshCw, CheckCircle2, Mail } from "lucide-react";
 
-import { useNavigate } from "react-router-dom";
-import OTPField from "../../components/OTPField";
-import Button from "../../components/Button";
+// Components
+import OTPField from "../../components/UI/OTPField";
+import Button from "../../components/UI/Button";
 
+// Thunks
 import { verifyEmail } from "../../features/auth/thunks/verifyEmail";
 import { resendVerificationEmail } from "../../features/auth/thunks/resendVerificationEmail";
 
+// Toast
 import { toast } from "react-toastify";
 
 const EmailVerification = () => {
@@ -39,7 +44,9 @@ const EmailVerification = () => {
     try {
       await dispatch(resendVerificationEmail()).unwrap();
     } catch (error) {
+      setOtp(Array(6).fill(""));
       console.error("Resend verification email failed:", error);
+      toast.error(error.message || "Failed to resend verification email");
     }
   };
 
@@ -55,9 +62,10 @@ const EmailVerification = () => {
 
       setTimeout(() => {
         navigate("/login", { replace: true });
-      }, 1800);
+      }, 1000);
     } catch (error) {
       setOtp(Array(6).fill(""));
+      setTimeLeft(0);
       console.error("Email verification failed:", error);
       toast.error(error.message || "Email verification failed");
     }
@@ -80,7 +88,7 @@ const EmailVerification = () => {
         </button>
 
         {/* Verification Card */}
-        <div className="rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-7">
+        <div className="rounded-2xl border border-border bg-bg-surface p-6 shadow-sm sm:p-7">
           {/* Heading */}
           <div className="mb-5 text-center sm:mb-7">
             {/* Verification Icon */}
@@ -91,7 +99,7 @@ const EmailVerification = () => {
             </div>
 
             {/* Heading */}
-            <h1 className="mb-2 text-xl font-bold tracking-tight text-text sm:text-2xl">
+            <h1 className="mb-2 text-text-primary capitalize text-xl font-bold tracking-tight text-text sm:text-2xl">
               Verify your email
             </h1>
 

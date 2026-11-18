@@ -1,5 +1,5 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { fetchSubcategoriesRequest } from "../../../api/subcategory/subcategory";
 
 export const fetchSubcategories = createAsyncThunk(
   "subcategories/fetchSubcategories",
@@ -13,13 +13,13 @@ export const fetchSubcategories = createAsyncThunk(
       if (search) params.append("search", search);
       if (sort) params.append("sort", sort);
 
-      const response = await axios.get(
-        `/api/v1/subcategories?${params.toString()}`,
-      );
+      const response = await fetchSubcategoriesRequest(params);
 
-      return response.data;
+      return response;
     } catch (error) {
-      return rejectWithValue(error.response?.data || error.message);
+      return rejectWithValue(
+        error.response?.data || { message: error.message },
+      );
     }
   },
 );

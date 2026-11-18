@@ -1,5 +1,5 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { fetchProductsPriceRangeRequest } from "../../../api/product/product";
 
 export const fetchProductsPriceRange = createAsyncThunk(
   "products/fetchProductsPriceRange",
@@ -17,11 +17,9 @@ export const fetchProductsPriceRange = createAsyncThunk(
         }
       });
 
-      const response = await axios.get(
-        `/api/v1/products/price-range?${params.toString()}`,
-      );
+      const response = await fetchProductsPriceRangeRequest(params);
 
-      return response.data;
+      return response;
     } catch (error) {
       return rejectWithValue(
         error.response?.data || { message: error.message },

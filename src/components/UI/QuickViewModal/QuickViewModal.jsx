@@ -27,23 +27,23 @@ import {
 } from "lucide-react";
 
 // Thunks and actions
-import { addToCart } from "../../features/cart/thunks/addToCart";
-import { optimisticToggleWishlist } from "../../features/wishlist/wishlistSlice";
-import { addToWishlist } from "../../features/wishlist/thunks/addToWishlist";
-import { deleteFromWishlist } from "../../features/wishlist/thunks/deleteFromWishlist";
+import { addToCart } from "../../../features/cart/thunks/addToCart";
+import { optimisticToggleWishlist } from "../../../features/wishlist/wishlistSlice";
+import { addToWishlist } from "../../../features/wishlist/thunks/addToWishlist";
+import { deleteFromWishlist } from "../../../features/wishlist/thunks/deleteFromWishlist";
 
 import {
   optimisticAddToCart,
   rollbackAddToCart,
-} from "../../features/cart/cartSlice";
+} from "../../../features/cart/cartSlice";
 
 // Utils
-import { formatPrice } from "../../utils/formatPrice";
+import { formatPrice } from "../../../utils/formatPrice";
 
 const QuickViewModal = ({ open, onClose, product }) => {
   const dispatch = useDispatch();
   const [mainSwiper, setMainSwiper] = useState(null);
-
+  console.log("QuickViewModal: product:", product);
   const { cart } = useSelector((store) => store.cart);
   const { wishlist } = useSelector((store) => store.wishlist);
 
@@ -53,9 +53,11 @@ const QuickViewModal = ({ open, onClose, product }) => {
   );
 
   const hasVariants = useMemo(
-    () => product?.variants?.length > 1,
+    () => product?.variants?.length > 0,
     [product.variants],
   );
+
+  console.log("QuickViewModal: hasVariants:", hasVariants);
 
   // Get the available variant with the highest quantity
   const availableVariant = useMemo(

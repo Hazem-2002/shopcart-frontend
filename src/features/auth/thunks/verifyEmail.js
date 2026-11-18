@@ -1,20 +1,12 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { verifyEmailRequest } from "../../../api/auth/auth";
 
 export const verifyEmail = createAsyncThunk(
   "auth/verifyEmail",
   async (otp, { rejectWithValue }) => {
     try {
-      const API_URL = "/api/v1";
-
-      const { data } = await axios.post(`${API_URL}/auth/verify-email`, {
-        otp,
-      });
-
-      return data;
+      return await verifyEmailRequest(otp);
     } catch (error) {
-      console.log(error.response?.data);
-
       return rejectWithValue(
         error.response?.data || { message: error.message },
       );
