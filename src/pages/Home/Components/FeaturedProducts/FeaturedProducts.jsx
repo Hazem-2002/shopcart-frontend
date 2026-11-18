@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -80,7 +80,7 @@ const FeaturedProducts = () => {
     stock: "all",
   });
 
-  const getSubcategoryFilters = useCallback(() => {
+  const getSubcategoryFilters = useMemo(() => {
     if (selectedSubcategory === "others") {
       return {
         "subcategories[nin]": subcategories.map(({ _id }) => _id),
@@ -91,26 +91,30 @@ const FeaturedProducts = () => {
   }, [selectedSubcategory, subcategories]);
 
   // Apply selected filters
-  const applyFiltersHandler = (updatedFilters = filters) =>
-    dispatch(
-      fetchProducts({
-        ...getSubcategoryFilters(),
-        search: updatedFilters.search,
-        "priceAfterDiscount[gte]": updatedFilters.priceRange[0],
-        "priceAfterDiscount[lte]": updatedFilters.priceRange[1],
-        isFeatured:
-          updatedFilters.featured === "all"
-            ? undefined
-            : updatedFilters.featured === "true",
-        ...(updatedFilters.stock === "all"
-          ? {}
-          : updatedFilters.stock === "in-stock"
-            ? { "quantity[gte]": 1 }
-            : { "quantity[eq]": 0 }),
-        limit,
-        sort: updatedFilters.sort,
-      }),
-    );
+  const applyFiltersHandler = useCallback(
+    (updatedFilters = filters) => {
+      return dispatch(
+        fetchProducts({
+          ...getSubcategoryFilters,
+          search: updatedFilters.search,
+          "priceAfterDiscount[gte]": updatedFilters.priceRange[0],
+          "priceAfterDiscount[lte]": updatedFilters.priceRange[1],
+          isFeatured:
+            updatedFilters.featured === "all"
+              ? undefined
+              : updatedFilters.featured === "true",
+          ...(updatedFilters.stock === "all"
+            ? {}
+            : updatedFilters.stock === "in-stock"
+              ? { "quantity[gte]": 1 }
+              : { "quantity[eq]": 0 }),
+          limit,
+          sort: updatedFilters.sort,
+        }),
+      );
+    },
+    [dispatch, filters, getSubcategoryFilters, limit],
+  );
 
   // Update grid view on window resize
   useEffect(() => {
@@ -160,7 +164,7 @@ const FeaturedProducts = () => {
 
     applyFiltersHandler({ ...filters, priceRange: [null, null] });
 
-    dispatch(fetchProductsPriceRange(getSubcategoryFilters()));
+    dispatch(fetchProductsPriceRange(getSubcategoryFilters));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, selectedSubcategory]);

@@ -14,12 +14,16 @@ const apiInstance = axios.create({
 
 // Prevent multiple refresh requests at the same time
 let refreshPromise = null;
+let sessionExpired = false;
 
 // Request Interceptor
 apiInstance.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem("accessToken");
     const CSRFToken = localStorage.getItem("CSRFToken");
+
+    // Check if request has an access token
+    config._hadAccessToken = Boolean(accessToken);
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
@@ -43,8 +47,10 @@ apiInstance.interceptors.response.use(
     if (
       error.response?.status !== 401 ||
       !originalRequest ||
+      !originalRequest._hadAccessToken ||
       originalRequest._retry ||
       originalRequest.url?.includes("/auth/login") ||
+      originalRequest.url?.includes("/auth/logout") ||
       originalRequest.url?.includes("/auth/refresh-token")
     ) {
       return Promise.reject(error);
@@ -65,6 +71,9 @@ apiInstance.interceptors.response.use(
             // Update localStorage
             localStorage.setItem("accessToken", accessToken);
 
+            // Reset session expiration flag
+            sessionExpired = false;
+
             return accessToken;
           })
           .finally(() => {
@@ -78,13 +87,23 @@ apiInstance.interceptors.response.use(
 
       return apiInstance(originalRequest);
     } catch (refreshError) {
-      store.dispatch(logout());
-      navigateTo("/login", { replace: true });
+      const status = refreshError.response?.status;
+
+      // Logout only when refresh token is expired or invalid
+      if ([401, 403].includes(status) && !sessionExpired) {
+        sessionExpired = true;
+
+        store.dispatch(logout());
+
+        navigateTo("/login", { replace: true });
+      }
+
       return Promise.reject(refreshError);
     }
   },
 );
 
+// API Methods
 const api = {
   get: (url, config = {}) =>
     apiInstance.get(url, config).then((res) => res.data),
