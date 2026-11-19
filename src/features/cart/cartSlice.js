@@ -19,6 +19,7 @@ const cartSlice = createSlice({
       state.count = 0;
       state.error = null;
       state.success = false;
+      state.isLoading = false;
     },
 
     // Optimistic Count Update

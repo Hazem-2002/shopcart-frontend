@@ -17,6 +17,14 @@ const wishlistSlice = createSlice({
   initialState,
 
   reducers: {
+    clearWishlist: (state) => {
+      state.wishlist = [];
+      state.count = 0;
+      state.error = null;
+      state.success = false;
+      state.isLoading = false;
+    },
+
     optimisticToggleWishlist: (state, action) => {
       const productId = action.payload;
 
@@ -104,6 +112,7 @@ const wishlistSlice = createSlice({
   },
 });
 
-export const { optimisticToggleWishlist } = wishlistSlice.actions;
+export const { clearWishlist, optimisticToggleWishlist } =
+  wishlistSlice.actions;
 
 export default wishlistSlice.reducer;

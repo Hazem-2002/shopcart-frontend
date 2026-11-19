@@ -1,27 +1,37 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+
+import { setTheme } from "../../../features/theme/themeSlice";
+
+import CircularProgress from "@mui/material/CircularProgress";
 
 import {
   UserRound,
-  ChevronDown,
   User,
   Package,
   Heart,
   LogOut,
+  ChevronDown,
+  Sun,
+  Moon,
 } from "lucide-react";
 
+import Avatar from "@mui/material/Avatar";
 import Button from "../../../components/UI/Button";
-// import { logout } from "../../features/auth/authSlice";
+import { logout } from "../../../features/auth/thunks/logout";
+import { toast } from "react-toastify";
 
 const NavbarAuth = () => {
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
-
-  const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { mode } = useSelector((state) => state.theme);
+  const { isAuthenticated, user, isLoading } = useSelector(
+    (state) => state.auth,
+  );
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -31,18 +41,27 @@ const NavbarAuth = () => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("pointerdown", handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("pointerdown", handleClickOutside);
     };
   }, []);
 
+  useEffect(() => {
+    // Update the theme in localStorage whenever it changes
+    if (mode === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [mode]);
+
   // Logout
-  const handleLogout = () => {
-    // dispatch(logout());
+  const handleLogout = async () => {
+    await dispatch(logout()).unwrap();
     setIsOpen(false);
-    navigate("/login");
+    toast.success("Logged out successfully");
   };
 
   const menuItems = [
@@ -72,32 +91,39 @@ const NavbarAuth = () => {
           iconSize={15}
           variant="contained"
           onClick={() => navigate("/login")}
-          className="max-lg:!hidden !shrink-0"
+          className="max-sm:!hidden !shrink-0"
         />
       ) : (
-        <div ref={dropdownRef} className="relative max-lg:!hidden">
+        <div ref={dropdownRef} className="relative max-sm:!hidden">
           {/* Account Button */}
           <button
             type="button"
             onClick={() => setIsOpen((prev) => !prev)}
-            className="group flex shrink-0 cursor-pointer items-center gap-2 rounded-xl border border-border bg-bg-surface px-3 py-2 transition-all duration-200 hover:border-primary/40 hover:bg-primary/5"
+            aria-label="Account menu"
+            aria-expanded={isOpen}
+            className="group flex shrink-0 cursor-pointer items-center gap-2 rounded-lg lg:rounded-full border border-border bg-bg-surface max-xl:pr-2 max-xl:py-0.5 xl:px-2 xl:py-1.5 shadow transition hover:border-primary-light hover:bg-primary-light/50"
           >
-            {/* Avatar */}
-            <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <UserRound size={17} />
-            </div>
+            <Avatar
+              src={user?.image?.image_url}
+              alt={user?.name || "User"}
+              className="!size-9 lg:!size-10 !text-sm !font-semibold !uppercase !bg-primary/10 !text-primary"
+            >
+              {user?.name?.slice(0, 2)?.toUpperCase() || "U"}
+            </Avatar>
 
-            {/* User Info */}
-            <div className="flex flex-col items-start">
+            <div className="hidden xl:flex flex-col items-start leading-tight">
               <span className="max-w-[110px] truncate text-xs font-semibold text-text-primary">
-                {user?.name || "My Account"}
+                {user?.name}
               </span>
-              <span className="text-[10px] text-secondary">My Account</span>
+
+              <span className="text-[10px] capitalize text-secondary font-bold">
+                {user?.role}
+              </span>
             </div>
 
             <ChevronDown
               size={15}
-              className={`ml-1 text-secondary transition-transform duration-200 ${
+              className={`text-secondary transition-transform duration-200 ${
                 isOpen ? "rotate-180" : ""
               }`}
             />
@@ -105,13 +131,14 @@ const NavbarAuth = () => {
 
           {/* Dropdown */}
           {isOpen && (
-            <div className="absolute right-0 top-full z-50 mt-3 w-[230px] overflow-hidden rounded-xl border border-border bg-bg-surface shadow-xl shadow-black/10 animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="absolute right-0 top-full z-50 mt-1.5 w-[250px] overflow-hidden rounded-xl border border-border bg-bg-surface shadow-xl shadow-black/10 animate-in fade-in slide-in-from-top-2 duration-200">
               {/* User Info */}
               <div className="border-b border-border px-4 py-3">
-                <p className="truncate text-sm font-semibold text-text-primary">
-                  {user?.name || "My Account"}
+                <p className="truncate text-sm max-lg:text-[13px] font-semibold text-text-primary">
+                  {user?.name}
                 </p>
-                <p className="mt-0.5 truncate text-xs text-secondary">
+
+                <p className="mt-0.5 truncate text-xs max-lg:text-[11px] text-secondary">
                   {user?.email}
                 </p>
               </div>
@@ -123,7 +150,7 @@ const NavbarAuth = () => {
                     key={path}
                     to={path}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-secondary transition-colors duration-200 hover:bg-primary/8 hover:text-primary"
+                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm max-lg:text-[13px] text-secondary transition-colors hover:bg-primary-light/50 hover:text-primary"
                   >
                     <Icon size={17} strokeWidth={1.8} />
                     <span className="font-medium">{label}</span>
@@ -131,15 +158,72 @@ const NavbarAuth = () => {
                 ))}
               </div>
 
+              {/* Theme Switcher */}
+              <div className="border-t border-border p-2">
+                <div className="flex items-center justify-between px-3 py-2">
+                  {/* Label */}
+                  <div className="flex items-center gap-3 text-sm max-lg:text-[13px] text-secondary">
+                    {mode === "dark" ? (
+                      <Moon size={17} strokeWidth={1.8} />
+                    ) : (
+                      <Sun size={17} strokeWidth={1.8} />
+                    )}
+
+                    <span className="font-medium">Appearance</span>
+                  </div>
+
+                  {/* Theme Options */}
+                  <div className="flex items-center gap-1 rounded-lg bg-bg-muted p-1">
+                    <button
+                      type="button"
+                      onClick={() => dispatch(setTheme("light"))}
+                      aria-label="Light mode"
+                      aria-pressed={mode === "light"}
+                      className={`rounded-md p-1.5 transition-all duration-200 cursor-pointer ${
+                        mode === "light"
+                          ? "bg-bg-surface text-primary shadow-sm"
+                          : "text-secondary hover:text-text-primary"
+                      }`}
+                    >
+                      <Sun size={15} />
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => dispatch(setTheme("dark"))}
+                      aria-label="Dark mode"
+                      aria-pressed={mode === "dark"}
+                      className={`rounded-md p-1.5 transition duration-200 cursor-pointer ${
+                        mode === "dark"
+                          ? "bg-bg-surface text-primary shadow-sm"
+                          : "text-secondary hover:text-text-primary"
+                      }`}
+                    >
+                      <Moon size={15} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
               {/* Logout */}
               <div className="border-t border-border p-2">
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-500 transition-colors duration-200 hover:bg-red-500/8"
+                  disabled={isLoading}
+                  className="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm max-lg:text-[13px] font-medium text-danger transition-colors duration-200 hover:bg-danger/7 disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  <LogOut size={17} strokeWidth={1.8} />
-                  <span>Logout</span>
+                  {isLoading ? (
+                    <CircularProgress
+                      size={17}
+                      thickness={5}
+                      sx={{ color: "currentColor" }}
+                    />
+                  ) : (
+                    <LogOut size={17} strokeWidth={1.8} />
+                  )}
+
+                  <span>{isLoading ? "Logging out..." : "Logout"}</span>
                 </button>
               </div>
             </div>

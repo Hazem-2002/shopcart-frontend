@@ -83,35 +83,37 @@ const Header = () => {
             </nav>
 
             {/* Actions */}
-            <div className="flex items-center justify-end gap-2 sm:gap-4 lg:gap-5 xl:gap-8 min-w-0">
-              <div className="flex items-center gap-0.5 xs:gap-2 sm:gap-3 shrink-0">
-                {/* Search */}
-                <IconButton ariaLabel="Search">
-                  <Search className="!size-4 xs:!size-5" strokeWidth={1.8} />
-                </IconButton>
+            <div className="flex items-center justify-end gap-2 sm:gap-4 min-w-0">
+              <div className="grow flex justify-center">
+                <div className="flex items-center gap-0.5 xs:gap-2 sm:gap-3 shrink-0">
+                  {/* Search */}
+                  <IconButton ariaLabel="Search">
+                    <Search className="!size-4 xs:!size-5" strokeWidth={1.8} />
+                  </IconButton>
 
-                {/* Wishlist */}
-                <Badge
-                  ariaLabel="Wishlist"
-                  value={wishlistCount}
-                  icon={
-                    <Heart className="!size-4 xs:!size-5" strokeWidth={1.8} />
-                  }
-                  badgeClassName="!text-[10px] xs:!text-[11px] !p-0.5 xs:!p-1"
-                />
+                  {/* Wishlist */}
+                  <Badge
+                    ariaLabel="Wishlist"
+                    value={wishlistCount}
+                    icon={
+                      <Heart className="!size-4 xs:!size-5" strokeWidth={1.8} />
+                    }
+                    badgeClassName="!text-[10px] xs:!text-[11px] !p-0.5 xs:!p-1"
+                  />
 
-                {/* Cart */}
-                <Badge
-                  ariaLabel="Cart"
-                  value={cartCount}
-                  icon={
-                    <ShoppingCart
-                      className="!size-4 xs:!size-5"
-                      strokeWidth={1.8}
-                    />
-                  }
-                  badgeClassName="!text-[10px] xs:!text-[11px] !p-0.5 xs:!p-1"
-                />
+                  {/* Cart */}
+                  <Badge
+                    ariaLabel="Cart"
+                    value={cartCount}
+                    icon={
+                      <ShoppingCart
+                        className="!size-4 xs:!size-5"
+                        strokeWidth={1.8}
+                      />
+                    }
+                    badgeClassName="!text-[10px] xs:!text-[11px] !p-0.5 xs:!p-1"
+                  />
+                </div>
               </div>
 
               {/* Login */}

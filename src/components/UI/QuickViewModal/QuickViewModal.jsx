@@ -43,7 +43,7 @@ import { formatPrice } from "../../../utils/formatPrice";
 const QuickViewModal = ({ open, onClose, product }) => {
   const dispatch = useDispatch();
   const [mainSwiper, setMainSwiper] = useState(null);
-  console.log("QuickViewModal: product:", product);
+
   const { cart } = useSelector((store) => store.cart);
   const { wishlist } = useSelector((store) => store.wishlist);
 
@@ -56,8 +56,6 @@ const QuickViewModal = ({ open, onClose, product }) => {
     () => product?.variants?.length > 0,
     [product.variants],
   );
-
-  console.log("QuickViewModal: hasVariants:", hasVariants);
 
   // Get the available variant with the highest quantity
   const availableVariant = useMemo(
