@@ -116,27 +116,12 @@ const FeaturedProducts = () => {
     [dispatch, filters, getSubcategoryFilters, limit],
   );
 
-  // Update grid view on window resize
-  useEffect(() => {
-    const handleResize = () => {
-      setGridView(getDefaultGridView());
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   // Fetch subcategories on component mount and when the window is resized
   useEffect(() => {
     const getSubcategories = () => {
-      const width = window.innerWidth;
-
-      const limit = width < 350 ? 3 : width < 768 ? 4 : width < 1024 ? 5 : 6;
-
       dispatch(
         fetchSubcategories({
-          limit,
+          limit: subcategoryLimit,
           sort: "createdAt",
           fields: "name",
         }),
@@ -144,11 +129,7 @@ const FeaturedProducts = () => {
     };
 
     getSubcategories();
-
-    window.addEventListener("resize", getSubcategories);
-
-    return () => window.removeEventListener("resize", getSubcategories);
-  }, [dispatch]);
+  }, [dispatch, subcategoryLimit]);
 
   // Set the first subcategory as selected if none is selected
   useEffect(() => {
