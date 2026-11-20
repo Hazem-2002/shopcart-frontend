@@ -195,41 +195,46 @@ const FeaturedProducts = () => {
   };
 
   return (
-    <section className="w-[98%] md:container mx-auto flex flex-col gap-10 px-4 py-14 md:py-16 text-text-primary">
+    <section className="mx-auto flex w-[98%] flex-col gap-7 overflow-hidden p-4 text-text-primary md:container min-w-[90%]">
       {/* Header */}
-      <div className="mx-auto px-2 flex flex-col items-center text-center">
+      <div className="mx-auto flex flex-col items-center px-3 text-center">
         {/* Eyebrow */}
-        <div className="mb-5 flex items-center gap-3">
-          <span className="h-px w-8 bg-gradient-to-r from-transparent to-primary" />
-
-          <span className="text-xs font-bold uppercase tracking-[0.25em] text-primary">
-            Our Collection
+        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3 py-1.5 sm:mb-5 sm:gap-2.5 sm:px-3.5">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/40" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
           </span>
 
-          <span className="h-px w-8 bg-gradient-to-l from-transparent to-primary" />
+          <span className="text-[9px] font-bold uppercase tracking-[0.16em] text-primary sm:text-[10px] sm:tracking-[0.18em] md:text-[11px] md:tracking-[0.2em]">
+            Our Collection
+          </span>
         </div>
 
         {/* Heading */}
-        <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-text-primary sm:text-4xl md:text-5xl">
+        <h2 className="text-2xl font-extrabold leading-tight tracking-tight text-text-primary min-[400px]:text-[28px] sm:text-3xl md:text-4xl lg:text-[44px]">
           Featured{" "}
-          <span className="bg-gradient-to-r from-primary to-primary-active bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-primary via-primary-active to-primary bg-clip-text text-transparent">
             Products
           </span>
         </h2>
 
         {/* Description */}
-        <p className="text-sm leading-7 text-text-secondary md:text-base">
+        <p className="mt- text-[11px] leading-5 text-text-secondary min-[400px]:text-xs sm:mt-3 sm:text-sm sm:leading-6 md:text-base md:leading-7">
           Discover our carefully curated selection of premium products,
           handpicked to bring you the best quality and value.
         </p>
 
-        {/* Decorative Line */}
-        <div className="mt-7 h-1 w-16 rounded-full bg-gradient-to-r from-primary to-primary-active" />
+        {/* Decorative Accent */}
+        <div className="mt-5 flex items-center gap-1.5 sm:mt-6">
+          <span className="h-1 w-5 rounded-full bg-primary/20 sm:w-6" />
+          <span className="h-1 w-8 rounded-full bg-primary sm:w-10" />
+          <span className="h-1 w-5 rounded-full bg-primary/20 sm:w-6" />
+        </div>
       </div>
 
       {/* Filter */}
-      <div className="flex flex-col p-6 border border-border rounded-lg shadow bg-bg-card">
-        <div className="flex flex-col gap-6">
+      <div className="flex flex-col rounded-lg border border-border bg-bg-card p-4 shadow sm:p-5 md:p-6">
+        <div className="flex flex-col gap-5 sm:gap-6">
           {/* Subcategory Filters */}
           <div className="flex flex-wrap items-center gap-2">
             {subcategoriesLoading ? (
@@ -245,7 +250,7 @@ const FeaturedProducts = () => {
                   <button
                     key={subcategory._id}
                     onClick={() => setSelectedSubcategory(subcategory._id)}
-                    className={`cursor-pointer rounded-full border px-4 py-2 text-xs font-semibold capitalize transition duration-200 ${
+                    className={`cursor-pointer rounded-full border px-3 py-1.5 text-[11px] font-semibold capitalize transition duration-200 min-[400px]:px-4 min-[400px]:py-2 min-[400px]:text-xs ${
                       selectedSubcategory === subcategory._id
                         ? "border-primary bg-primary text-white shadow-sm"
                         : "border-border bg-surface text-text-secondary hover:border-primary hover:bg-primary/10 hover:text-primary"
@@ -257,7 +262,7 @@ const FeaturedProducts = () => {
 
                 <button
                   onClick={() => setSelectedSubcategory("others")}
-                  className={`cursor-pointer rounded-full border px-4 py-2 text-xs font-semibold capitalize transition duration-200 ${
+                  className={`cursor-pointer rounded-full border px-3 py-1.5 text-[11px] font-semibold capitalize transition duration-200 min-[400px]:px-4 min-[400px]:py-2 min-[400px]:text-xs ${
                     selectedSubcategory === "others"
                       ? "border-primary bg-primary text-white shadow-sm"
                       : "border-border bg-surface text-text-secondary hover:border-primary hover:bg-primary/10 hover:text-primary"
@@ -270,16 +275,18 @@ const FeaturedProducts = () => {
 
             <Link
               to="/shop"
-              className="md:ml-auto shrink-0 rounded-full border border-primary px-3 py-1 sm:px-4 text-xs sm:text-sm font-semibold capitalize text-primary transition hover:border-primary-active hover:bg-primary-light hover:text-primary"
+              className="shrink-0 rounded-full border border-primary px-3 py-1.5 leading-none text-[11px] font-semibold capitalize text-primary transition hover:border-primary-active hover:bg-primary-light hover:text-primary min-[400px]:px-4 min-[400px]:py-2 min-[400px]:text-xs md:ml-auto"
             >
               See All
             </Link>
           </div>
+
           <hr className="border-0 border-t border-border" />
+
           {/* View Options */}
-          <div className="flex flex-col md:flex-row md:justify-between gap-4 md:items-center">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-2 sm:gap-4">
-              <h3 className="text-xs sm:text-sm font-semibold capitalize text-text-primary">
+              <h3 className="text-[11px] font-semibold capitalize text-text-primary min-[400px]:text-xs sm:text-sm">
                 View:
               </h3>
 
@@ -295,20 +302,34 @@ const FeaturedProducts = () => {
                     icon: PanelsTopLeft,
                     className: "!hidden lg:!flex",
                   },
-                  { value: "3", icon: Grid3X3, className: "!hidden md:!flex" },
-                  { value: "2", icon: Grid2X2, className: "!hidden sm:!flex" },
-                  { value: "list", icon: List, className: "!flex" },
+                  {
+                    value: "3",
+                    icon: Grid3X3,
+                    className: "!hidden md:!flex",
+                  },
+                  {
+                    value: "2",
+                    icon: Grid2X2,
+                    className: "!hidden sm:!flex",
+                  },
+                  {
+                    value: "list",
+                    icon: List,
+                    className: "!flex",
+                  },
                 ].map(({ value, icon: Icon, className }) => (
                   <Button
                     key={value}
                     onClick={() => setGridView(value)}
                     variant="custom"
-                    className={`!min-w-0 !size-8 !shrink-0 !items-center !justify-center !rounded-md !border !transition sm:!size-9 ${className} ${
+                    className={`!min-w-0 !size-8 !shrink-0 !items-center !justify-center !leading-none !rounded-md !border !transition sm:!size-9 ${className} ${
                       gridView === value
                         ? "!border-primary !bg-primary !text-white"
                         : "!border-border !bg-surface !text-text-secondary hover:!border-primary hover:!text-primary"
                     }`}
-                    aria-label={`View ${value === "list" ? "list" : `${value} columns`}`}
+                    aria-label={`View ${
+                      value === "list" ? "list" : `${value} columns`
+                    }`}
                     aria-pressed={gridView === value}
                   >
                     <Icon
@@ -327,10 +348,10 @@ const FeaturedProducts = () => {
                   startIcon={<Funnel strokeWidth={1.8} className="!shrink-0" />}
                   iconSize={15}
                   className={`
-                    !min-w-0 !h-8 sm:!h-9
-                    !shrink-0 !items-center !justify-center
+                    !min-w-0 !h-8 sm:!h-9 leading-none
+                    !shrink-0 flex !items-center !justify-center
                     !rounded-md !border !px-2 sm:!px-3
-                    !text-xs
+                    !text-[11px] sm:!text-xs
                     [&_.MuiButton-startIcon]:!mr-1.5
                     ${
                       openFilter
@@ -339,31 +360,36 @@ const FeaturedProducts = () => {
                     }
                   `}
                 >
-                  <span className="font-bold">Filters</span>
+                  <span className="font-bold leading-none">Filters</span>
                 </Button>
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 sm:items-center max-md:w-full">
-              <div className="flex items-center gap-3 max-md:grow">
-                <ArrowUpNarrowWide size={20} strokeWidth={1.8} />
+            <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:gap-4 md:w-auto">
+              <div className="flex items-center gap-3 max-sm:grow">
+                <ArrowUpNarrowWide
+                  size={20}
+                  strokeWidth={1.8}
+                  className="shrink-0"
+                />
 
                 <Select
                   name="sort"
                   value={filters.sort}
                   onChange={(event) => handleSortChange(event.target.value)}
                   options={sortOptions}
-                  className="max-md:!w-full !h-9"
+                  className="!h-9 max-md:!w-full"
                 />
               </div>
-              <div className="flex items-center max-sm:justify-end gap-2.5">
+
+              <div className="flex items-center justify-end gap-2.5">
                 <Eye
                   size={20}
                   strokeWidth={1.5}
                   className="cursor-pointer transition-colors duration-200 hover:text-primary"
                 />
 
-                <span className="rounded-full bg-primary-light px-2.5 py-1.5 text-xs font-semibold capitalize text-primary">
+                <span className="rounded-full bg-primary-light px-2.5 py-1.5 text-[11px] font-semibold capitalize text-primary min-[400px]:text-xs">
                   {count} products
                 </span>
               </div>

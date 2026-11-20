@@ -92,57 +92,61 @@ const Hero = () => {
             key={slider.id}
             className="!min-h-[calc(100vh-64px)] sm:!min-h-[calc(100vh-72px)]"
           >
-            <div className="relative py-10 group isolate flex items-center min-h-[inherit] w-full overflow-hidden">
+            <div className="relative flex min-h-[inherit] w-full items-center overflow-hidden py-6 sm:py-8 md:py-10 isolate group">
               {/* Background Image */}
               <img
                 src={slider.image}
                 alt={slider.title}
-                className="absolute inset-0 -z-20 size-full object-cover transition-transform will-change-transform duration-500 group-hover:scale-105"
+                className="absolute inset-0 -z-20 size-full object-cover transition-transform duration-500 will-change-transform group-hover:scale-105"
               />
 
               {/* Overlay */}
-              <div className="absolute inset-0 -z-10 bg-gradient-to-r from-primary/7 via-primary/4 dark:from-primary/18 dark:via-primary/7 to-transparent" />
+              <div className="absolute inset-0 -z-10 bg-gradient-to-r from-primary/7 via-primary/4 to-transparent dark:from-primary/18 dark:via-primary/7" />
 
               {/* Content */}
-              <div className="w-[90%] mx-auto rounded-2xl border border-white/20 bg-bg-main/35 p-6 text-white shadow-lg shadow-black/5 max-sm:backdrop-blur-sm">
+              <div className="mx-auto w-[92%] rounded-xl border border-white/20 bg-bg-main/35 p-4 text-white shadow-lg shadow-black/5 max-sm:backdrop-blur-sm min-[400px]:w-[90%] min-[400px]:rounded-2xl min-[400px]:p-5 sm:p-6 md:p-8 lg:p-10">
                 {/* Eyebrow */}
-                <div className="mb-4.5 flex items-center gap-3">
-                  <span className="h-px w-10 bg-gradient-to-l from-secondary to-transparent" />
-                  <p className="text-xs font-bold uppercase tracking-[0.25em] text-secondary md:text-sm">
+                <div className="mb-3 flex items-center gap-2 min-[400px]:mb-4 min-[400px]:gap-3 sm:mb-5">
+                  <span className="h-px w-7 bg-gradient-to-l from-secondary to-transparent min-[400px]:w-10" />
+
+                  <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-secondary min-[400px]:text-[10px] min-[400px]:tracking-[0.2em] sm:text-xs sm:tracking-[0.25em] md:text-sm">
                     {slider.eyebrow}
                   </p>
-                  <span className="h-px w-10 bg-gradient-to-r from-secondary to-transparent" />
+
+                  <span className="h-px w-7 bg-gradient-to-r from-secondary to-transparent min-[400px]:w-10" />
                 </div>
 
                 {/* Heading */}
-                <h2 className="mb-5 sm:max-w-[60%] bg-gradient-to-br from-primary/70 via-primary/35 dark:from-primary dark:via-primary/50 to-primary bg-clip-text text-4xl font-black leading-[1.1] tracking-[-0.04em] text-transparent sm:text-5xl md:text-6xl lg:text-7xl">
+                <h2 className="mb-3 max-w-full bg-gradient-to-br from-primary/70 via-primary/35 to-primary bg-clip-text text-[28px] font-black leading-[1.1] tracking-[-0.04em] text-transparent min-[400px]:mb-4 min-[400px]:text-3xl sm:mb-5 sm:max-w-[60%] sm:text-5xl md:text-6xl lg:text-7xl dark:from-primary dark:via-primary/50">
                   {slider.title}
                 </h2>
 
                 {/* Description */}
-                <p className="mb-5 sm:max-w-[60%] text-sm leading-7 text-secondary md:text-base">
+                <p className="mb-4 max-w-full text-[11px] leading-5 text-secondary min-[400px]:mb-5 min-[400px]:text-xs min-[400px]:leading-6 sm:max-w-[60%] sm:text-sm sm:leading-7 md:text-base">
                   {slider.description}
                 </p>
 
                 {/* Offer */}
-                <div className="mb-7 inline-flex items-center gap-3">
+                <div className="mb-5 inline-flex items-center gap-2 min-[400px]:mb-6 min-[400px]:gap-3 sm:mb-7">
                   <span className="w-1 self-stretch rounded-full bg-gradient-to-b from-secondary/80 via-secondary/30 to-secondary/80" />
 
-                  <span className="text-2xl font-black text-secondary md:text-3xl">
+                  <span className="text-xl font-black text-secondary min-[400px]:text-2xl md:text-3xl">
                     {slider.offer}
                   </span>
                 </div>
 
                 {/* Actions */}
-                <div className="flex flex-wrap items-center gap-4">
-                  <Button className="max-xs:!text-[10px] max-sm:!text-xs max-sm:!h-8">
+                <div className="flex flex-wrap items-center gap-2.5 min-[400px]:gap-3 sm:gap-4">
+                  <Button className="!h-8 !px-3 !text-[10px] min-[400px]:!h-9 min-[400px]:!px-4 min-[400px]:!text-xs sm:!h-10 sm:!px-5 sm:!text-sm md:!h-11">
                     {slider.buttonText}
                   </Button>
 
                   <Button
                     variant="outlined"
-                    endIcon={<ArrowRight />}
-                    className="max-xs:!text-[10px] max-sm:!text-xs max-sm:!h-8"
+                    endIcon={
+                      <ArrowRight className="!size-3.5 min-[400px]:!size-4 sm:!size-[18px]" />
+                    }
+                    className="!h-8 !px-3 !text-[10px] min-[400px]:!h-9 min-[400px]:!px-4 min-[400px]:!text-xs sm:!h-10 sm:!px-5 sm:!text-sm md:!h-11"
                   >
                     Explore Collection
                   </Button>

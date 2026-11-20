@@ -41,7 +41,7 @@ const Header = () => {
             </div>
 
             {/* Logo */}
-            <Link to="/" className="flex justify-center items-center min-w-0">
+            <Link to="/" className="flex justify-center lg:justify-start items-center min-w-0">
               <Logo />
             </Link>
 
