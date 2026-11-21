@@ -96,10 +96,15 @@ const CategoriesSlider = ({
           <span className="text-xs font-bold tabular-nums tracking-tight text-primary min-[480px]:text-[13px] sm:text-sm">
             {String(
               !swiperState.isEnd
-                ? swiper?.params.slidesPerView + swiperState.currentSlide >
-                  categories.length
-                  ? swiper?.params.slidesPerView + swiperState.currentSlide - 1
-                  : swiper?.params.slidesPerView + swiperState.currentSlide
+                ? (() => {
+                    const slidesPerView =
+                      Number(swiper?.params?.slidesPerView) || 0;
+                    const currentSlide = Number(swiperState.currentSlide) || 0;
+
+                    const total = slidesPerView + currentSlide;
+
+                    return total > categories.length ? total - 1 : total;
+                  })()
                 : categories.length,
             ).padStart(2, "0")}
           </span>

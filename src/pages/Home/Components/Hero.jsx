@@ -104,7 +104,7 @@ const Hero = () => {
               <div className="absolute inset-0 -z-10 bg-gradient-to-r from-primary/7 via-primary/4 to-transparent dark:from-primary/18 dark:via-primary/7" />
 
               {/* Content */}
-              <div className="mx-auto w-[92%] rounded-xl border border-white/20 bg-bg-main/35 p-4 text-white shadow-lg shadow-black/5 max-sm:backdrop-blur-sm min-[400px]:w-[90%] min-[400px]:rounded-2xl min-[400px]:p-5 sm:p-6 md:p-8 lg:p-10">
+              <div className="mx-auto w-[92%] rounded-xl border border-white/20 bg-bg-main/60 sm:bg-bg-main/60 p-4 text-white shadow-sm max-sm:backdrop-blur-sm min-[400px]:w-[90%] min-[400px]:rounded-2xl min-[400px]:p-5 sm:p-6 md:p-8 lg:p-10">
                 {/* Eyebrow */}
                 <div className="mb-3 flex items-center gap-2 min-[400px]:mb-4 min-[400px]:gap-3 sm:mb-5">
                   <span className="h-px w-7 bg-gradient-to-l from-secondary to-transparent min-[400px]:w-10" />
@@ -117,27 +117,27 @@ const Hero = () => {
                 </div>
 
                 {/* Heading */}
-                <h2 className="mb-3 max-w-full bg-gradient-to-br from-primary/70 via-primary/35 to-primary bg-clip-text text-[28px] font-black leading-[1.1] tracking-[-0.04em] text-transparent min-[400px]:mb-4 min-[400px]:text-3xl sm:mb-5 sm:max-w-[60%] sm:text-5xl md:text-6xl lg:text-7xl dark:from-primary dark:via-primary/50">
+                <h2 className="mb-3 max-w-full bg-gradient-to-br from-primary/70 via-primary/35 to-primary bg-clip-text text-[25px] font-black leading-[1.15] tracking-[-0.04em] text-transparent min-[400px]:mb-4 min-[400px]:text-[28px] sm:mb-5 sm:max-w-[60%] sm:text-4xl md:text-5xl lg:text-6xl dark:from-primary dark:via-primary/50">
                   {slider.title}
                 </h2>
 
                 {/* Description */}
-                <p className="mb-4 max-w-full text-[11px] leading-5 text-secondary min-[400px]:mb-5 min-[400px]:text-xs min-[400px]:leading-6 sm:max-w-[60%] sm:text-sm sm:leading-7 md:text-base">
+                <p className="mb-4 max-w-full text-[11px] leading-[1.7] text-secondary min-[400px]:mb-5 min-[400px]:text-xs min-[400px]:leading-6 sm:max-w-[60%] sm:text-[13px] sm:leading-7 md:text-sm lg:text-base">
                   {slider.description}
                 </p>
 
                 {/* Offer */}
-                <div className="mb-5 inline-flex items-center gap-2 min-[400px]:mb-6 min-[400px]:gap-3 sm:mb-7">
-                  <span className="w-1 self-stretch rounded-full bg-gradient-to-b from-secondary/80 via-secondary/30 to-secondary/80" />
+                <div className="mb-5 flex items-center gap-2 min-[400px]:mb-6 sm:mb-7">
+                  <span className="h-4 w-1 rounded-full bg-secondary/80 sm:h-5" />
 
-                  <span className="text-xl font-black text-secondary min-[400px]:text-2xl md:text-3xl">
+                  <span className="text-sm font-extrabold tracking-tight text-secondary min-[400px]:text-base sm:text-lg md:text-xl">
                     {slider.offer}
                   </span>
                 </div>
 
                 {/* Actions */}
                 <div className="flex flex-wrap items-center gap-2.5 min-[400px]:gap-3 sm:gap-4">
-                  <Button className="!h-8 !px-3 !text-[10px] min-[400px]:!h-9 min-[400px]:!px-4 min-[400px]:!text-xs sm:!h-10 sm:!px-5 sm:!text-sm md:!h-11">
+                  <Button className="!h-8 !px-3 !text-[10px] min-[400px]:!h-9 min-[400px]:!px-4 min-[400px]:!text-[11px] sm:!h-10 sm:!px-5 sm:!text-xs md:!h-11 md:!text-sm">
                     {slider.buttonText}
                   </Button>
 
@@ -146,7 +146,7 @@ const Hero = () => {
                     endIcon={
                       <ArrowRight className="!size-3.5 min-[400px]:!size-4 sm:!size-[18px]" />
                     }
-                    className="!h-8 !px-3 !text-[10px] min-[400px]:!h-9 min-[400px]:!px-4 min-[400px]:!text-xs sm:!h-10 sm:!px-5 sm:!text-sm md:!h-11"
+                    className="!h-8 !px-3 !text-[10px] min-[400px]:!h-9 min-[400px]:!px-4 min-[400px]:!text-[11px] sm:!h-10 sm:!px-5 sm:!text-xs md:!h-11 md:!text-sm"
                   >
                     Explore Collection
                   </Button>
