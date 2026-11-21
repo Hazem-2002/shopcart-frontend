@@ -6,7 +6,6 @@ import { Outlet } from "react-router-dom";
 import { fetchCurrentUser } from "../../features/auth/thunks/fetchCurrentUser";
 import { fetchCart } from "../../features/cart/thunks/fetchCart";
 import { fetchWishlist } from "../../features/wishlist/thunks/fetchWishlist.js";
-import { fetchCategories } from "../../features/categories/thunks/fetchCategories.js";
 
 // Actions
 import { logout } from "../../features/auth/thunks/logout.js";
@@ -35,7 +34,6 @@ export default function AuthInitializer() {
         // Fetch cart and wishlist in background
         dispatch(fetchCart());
         dispatch(fetchWishlist());
-        dispatch(fetchCategories());
       } catch (error) {
         console.error("Auth initialization failed:", error);
         dispatch(logout());

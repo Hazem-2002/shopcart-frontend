@@ -74,7 +74,7 @@ const CategoriesSlider = ({
       </Swiper>
 
       {/* Slider Footer */}
-      <div className="flex items-center gap-2.5 mt-4 sm:gap-4">
+      <div className="flex items-center gap-2.5 mt-4 mb-0.5 sm:gap-4">
         {/* Progress Bar */}
         <div className="relative h-1 flex-1 overflow-hidden rounded-full bg-border/60 sm:h-1.5">
           <div
@@ -92,7 +92,7 @@ const CategoriesSlider = ({
         </div>
 
         {/* Slide Counter */}
-        <div className="flex shrink-0 items-center gap-1.5 rounded-lg border border-border/70 bg-bg-surface px-2 py-1.5 shadow-sm min-[480px]:gap-2 min-[480px]:px-2.5 sm:rounded-xl sm:px-3 sm:py-2">
+        <div className="flex shrink-0 items-center gap-1.5 rounded-lg border border-border/70 bg-bg-surface px-2 py-1.5 shadow min-[480px]:gap-2 min-[480px]:px-2.5 sm:rounded-xl sm:px-3 sm:py-2">
           <span className="text-xs font-bold tabular-nums tracking-tight text-primary min-[480px]:text-[13px] sm:text-sm">
             {String(
               !swiperState.isEnd
