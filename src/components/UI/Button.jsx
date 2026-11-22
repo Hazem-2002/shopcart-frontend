@@ -7,7 +7,7 @@ const CustomButton = ({
   variant = "contained",
   startIcon,
   endIcon,
-  iconSize = 15,
+  iconSize,
   loading = false,
   disabled = false,
   fullWidth = false,
@@ -20,31 +20,55 @@ const CustomButton = ({
       variant={variant}
       startIcon={
         loading ? (
-          <CircularProgress size={iconSize} color="inherit" />
+          <CircularProgress size={iconSize || 13} color="inherit" />
         ) : startIcon ? (
-          React.cloneElement(startIcon, { size: iconSize })
+          React.cloneElement(startIcon, {
+            size: iconSize || 14,
+          })
         ) : null
       }
       endIcon={
         !loading && endIcon
-          ? React.cloneElement(endIcon, { size: iconSize })
+          ? React.cloneElement(endIcon, {
+              size: iconSize || 14,
+            })
           : null
       }
-      disabled={disabled}
+      disabled={disabled || loading}
       fullWidth={fullWidth}
-      className={`!rounded-lg !px-4 !capitalize !py-2 !text-xs sm:!text-sm !font-semibold !transition-none !shrink-0 ${
-        variant === "contained"
-          ? "!bg-gradient-to-tr from-primary hover:from-primary-active to-primary-active !text-white/95"
-          : variant === "outlined"
-            ? "!border-primary !text-primary hover:!bg-primary-light"
-            : ""
-      } disabled:!cursor-not-allowed disabled:!opacity-50 disabled:!shadow-none disabled:!scale-100 ${
-        variant === "contained"
-          ? "disabled:!bg-none disabled:!bg-bg-hover disabled:!text-text-muted"
-          : variant === "outlined"
-            ? "disabled:!border-border disabled:!bg-transparent disabled:!text-text-muted"
-            : ""
-      } ${className}`}
+      className={`
+        group !shrink-0 !rounded-lg
+        !px-3 !py-2
+        !text-[11px] min-[400px]:!text-xs
+        sm:!px-4 sm:!py-2.5 sm:!text-sm
+        md:!px-5 md:!py-2.5
+        lg:!px-5 lg:!py-3
+        !font-semibold !capitalize
+        !transition-all !duration-300
+
+        ${
+          variant === "contained"
+            ? "!bg-gradient-to-tr from-primary to-primary-active hover:from-primary-active hover:to-primary !text-white/95 hover:!shadow-md hover:!shadow-primary/20"
+            : variant === "outlined"
+              ? "!border-primary !text-primary hover:!bg-primary-light"
+              : ""
+        }
+
+        disabled:!cursor-not-allowed
+        disabled:!opacity-50
+        disabled:!shadow-none
+        disabled:!scale-100
+
+        ${
+          variant === "contained"
+            ? "disabled:!bg-none disabled:!bg-bg-hover disabled:!text-text-muted"
+            : variant === "outlined"
+              ? "disabled:!border-border disabled:!bg-transparent disabled:!text-text-muted"
+              : ""
+        }
+
+        ${className}
+      `}
       {...props}
     >
       {children || value}

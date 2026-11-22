@@ -1,4 +1,5 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 
 import { ToastContainer } from "react-toastify";
@@ -25,6 +26,17 @@ const ResetPassword = lazy(
 );
 
 const App = () => {
+  const { mode } = useSelector((state) => state.theme);
+  
+  useEffect(() => {
+    // Update the theme in localStorage whenever it changes
+    if (mode === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [mode]);
+
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>

@@ -6,8 +6,6 @@ import { Outlet } from "react-router-dom";
 import { fetchCurrentUser } from "../../features/auth/thunks/fetchCurrentUser";
 import { fetchCart } from "../../features/cart/thunks/fetchCart";
 import { fetchWishlist } from "../../features/wishlist/thunks/fetchWishlist.js";
-
-// Actions
 import { logout } from "../../features/auth/thunks/logout.js";
 
 // Components

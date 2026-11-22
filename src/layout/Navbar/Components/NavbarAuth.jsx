@@ -48,15 +48,6 @@ const NavbarAuth = () => {
     };
   }, []);
 
-  useEffect(() => {
-    // Update the theme in localStorage whenever it changes
-    if (mode === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [mode]);
-
   // Logout
   const handleLogout = async () => {
     await dispatch(logout()).unwrap();

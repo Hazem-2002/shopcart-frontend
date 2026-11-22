@@ -6,15 +6,18 @@ import Hero from "./Components/Hero";
 import FeaturedProducts from "./Components/FeaturedProducts/FeaturedProducts";
 import FeaturedCategories from "./Components/FeaturedCategories/FeaturedCategories";
 import WhyChooseUs from "./Components/WhyChooseUs/WhyChooseUs";
+import Brands from "./Components/Brands/brands.jsx";
 
 // Thunks
 import { fetchCategories } from "../../features/categories/thunks/fetchCategories.js";
+import { fetchBrands } from "../../features/brands/thunks/fetchBrands.js";
 
 const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCategories());
+    dispatch(fetchBrands());
   }, [dispatch]);
 
   return (
@@ -24,6 +27,7 @@ const Home = () => {
         <FeaturedProducts />
         <FeaturedCategories />
         <WhyChooseUs />
+        <Brands />
       </div>
     </>
   );
