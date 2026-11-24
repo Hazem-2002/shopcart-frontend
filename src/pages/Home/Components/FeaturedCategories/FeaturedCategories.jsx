@@ -20,7 +20,7 @@ const CategoriesSection = () => {
   });
 
   return (
-    <section className="mx-auto flex w-[98%] flex-col gap-7 overflow-hidden p-4 text-text-primary md:container min-w-[90%]">
+    <section className="section-container flex flex-col gap-7 text-text-primary">
       {/* Header */}
       <FeaturedCategoriesHeader />
 

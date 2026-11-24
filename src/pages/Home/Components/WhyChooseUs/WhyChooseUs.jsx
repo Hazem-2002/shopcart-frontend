@@ -73,7 +73,7 @@ const features = [
 
 const WhyChooseUs = () => {
   return (
-    <section className="w-[98%] md:container mx-auto px-4">
+    <section className="section-container">
       <div className="relative overflow-hidden rounded-2xl border border-border/70 bg-bg-surface/60 px-4 py-6 sm:rounded-3xl sm:px-8 sm:py-10 lg:px-10 lg:py-12 shadow">
         {/* Section Header */}
         <div className="relative mx-auto mb-8 text-center sm:mb-10 lg:mb-12">

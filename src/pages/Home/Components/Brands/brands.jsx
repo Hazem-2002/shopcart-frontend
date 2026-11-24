@@ -5,7 +5,7 @@ import BrandsContainer from "./Components/BrandsContainer";
 
 const Brands = () => {
   return (
-    <section className="mx-auto w-[98%] overflow-hidden p-4 md:container min-w-[90%]">
+    <section className="section-container">
       <BrandsHeader />
       <BrandsContainer />
     </section>

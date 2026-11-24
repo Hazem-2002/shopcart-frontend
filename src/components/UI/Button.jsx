@@ -37,18 +37,23 @@ const CustomButton = ({
       disabled={disabled || loading}
       fullWidth={fullWidth}
       className={`
-        group !shrink-0 !rounded-lg
-        !px-3 !py-2
-        !text-[11px] min-[400px]:!text-xs
-        sm:!px-4 sm:!py-2.5 sm:!text-sm
-        md:!px-5 md:!py-2.5
-        lg:!px-5 lg:!py-3
+        group !flex !shrink-0 !items-center !justify-center !m-0
+        !h-9.5 !rounded-lg
+        !px-3 !py-0
+        !text-[11px]
+        min-[400px]:!h-10
+        min-[400px]:!px-3.5
+        min-[400px]:!text-xs
+        sm:!h-10.5 sm:!px-4 sm:!text-sm
+        md:!px-5
+        lg:!px-5
+
         !font-semibold !capitalize
         !transition-all !duration-300
 
         ${
           variant === "contained"
-            ? "!bg-gradient-to-tr from-primary to-primary-active hover:from-primary-active hover:to-primary !text-white/95 hover:!shadow-md hover:!shadow-primary/20"
+            ? "!bg-gradient-to-tr from-primary to-primary-active hover:from-primary-active hover:to-primary !text-white/95"
             : variant === "outlined"
               ? "!border-primary !text-primary hover:!bg-primary-light"
               : ""
