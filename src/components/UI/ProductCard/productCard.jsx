@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // Swiper
@@ -39,6 +39,7 @@ const ProductCard = ({ product }) => {
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const swiperRef = useRef(null);
   const { wishlist, isLoading } = useSelector((store) => store.wishlist);
+  const { isAuthenticated } = useSelector((store) => store.auth);
 
   const isFavorite = wishlist.some((item) => item._id === product._id);
 
@@ -58,36 +59,51 @@ const ProductCard = ({ product }) => {
   const hasDiscount = product.priceAfterDiscount < product.price;
 
   const discountPercentage = hasDiscount
-    ? Number(
-        (
-          ((product.price - product.priceAfterDiscount) / product.price) *
-          100
-        ).toFixed(1),
-      )
+    ? Math.round(
+        ((product.price - product.priceAfterDiscount) / product.price) *
+          100 *
+          10,
+      ) / 10
     : 0;
 
   const isOutOfStock = product.stock <= 0;
 
-  const images = [
-    ...new Set(
-      [
-        product.productCover?.image_url,
-        ...(product.productImages || []).map((image) => image.image_url),
-      ].filter(Boolean),
-    ),
-  ];
+  const images = useMemo(
+    () => [
+      ...new Set(
+        [
+          product.productCover?.image_url,
+          ...(product.productImages || []).map((image) => image.image_url),
+        ].filter(Boolean),
+      ),
+    ],
+    [product.productCover?.image_url, product.productImages],
+  );
 
   const handleWishlist = () => {
+    if (!isAuthenticated) {
+      toast.error("Please login to manage your wishlist.");
+      return;
+    }
+
     const exists = wishlist.some((item) => item._id === product._id);
 
     dispatch(optimisticToggleWishlist(product._id));
 
-    if (exists) {
-      dispatch(deleteFromWishlist(product._id));
-      toast.success("Removed from wishlist");
-    } else {
-      dispatch(addToWishlist(product._id));
-      toast.success("Added to wishlist");
+    try {
+      if (exists) {
+        dispatch(deleteFromWishlist(product._id));
+
+        toast.success(`"${product.name}" removed from wishlist`);
+      } else {
+        dispatch(addToWishlist(product._id));
+
+        toast.success(`"${product.name}" added to wishlist`);
+      }
+    } catch (error) {
+      dispatch(optimisticToggleWishlist(product._id));
+
+      toast.error(error?.message || "Failed to update wishlist.");
     }
   };
 
@@ -120,7 +136,7 @@ const ProductCard = ({ product }) => {
           type="button"
           aria-label="Toggle wishlist"
           disabled={isLoading}
-          onClick={(e) => handleWishlist(e, product._id)}
+          onClick={handleWishlist}
           className={`!absolute !right-2.5 !top-2.5 !z-10 !flex !size-8 !items-center !justify-center !rounded-full !bg-bg-surface !shadow-sm !transition hover:!scale-110 will-change-transform min-[400px]:!size-9 sm:!right-3 sm:!top-3 ${isFavorite ? "!text-danger" : "!text-text-secondary hover:!text-danger"}`}
         >
           <Heart

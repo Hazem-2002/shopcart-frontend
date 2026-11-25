@@ -11,6 +11,7 @@ const Layout = lazy(() => import("./layout/Layout.jsx"));
 const Login = lazy(() => import("./pages/Login/Login.jsx"));
 const Register = lazy(() => import("./pages/Register/Register.jsx"));
 const Home = lazy(() => import("./pages/Home/Home.jsx"));
+const Shop = lazy(() => import("./pages/Shop/Shop.jsx"));
 const EmailVerification = lazy(
   () => import("./pages/EmailVerification/EmailVerification.jsx"),
 );
@@ -27,7 +28,7 @@ const ResetPassword = lazy(
 
 const App = () => {
   const { mode } = useSelector((state) => state.theme);
-  
+
   useEffect(() => {
     // Update the theme in localStorage whenever it changes
     if (mode === "dark") {
@@ -45,7 +46,7 @@ const App = () => {
             <Route path="/" element={<Layout />}>
               {/* Main Pages */}
               <Route index element={<Home />} />
-              <Route path="shop" element={<></>} />
+              <Route path="shop" element={<Shop />} />
               <Route path="categories" element={<></>} />
               <Route path="brands" element={<></>} />
               <Route path="blog" element={<></>} />

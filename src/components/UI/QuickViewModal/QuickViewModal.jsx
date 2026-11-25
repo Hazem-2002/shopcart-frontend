@@ -46,6 +46,7 @@ const QuickViewModal = ({ open, onClose, product }) => {
 
   const { cart } = useSelector((store) => store.cart);
   const { wishlist } = useSelector((store) => store.wishlist);
+  const { isAuthenticated } = useSelector((store) => store.auth);
 
   const isFavorite = useMemo(
     () => wishlist.some((item) => item._id === product._id),
@@ -158,10 +159,12 @@ const QuickViewModal = ({ open, onClose, product }) => {
   const discountPercentage = useMemo(() => {
     if (!hasDiscount) return 0;
 
-    return Math.round(
-      ((product.price - product.priceAfterDiscount) / product.price) * 100,
-    );
-  }, [hasDiscount, product.price, product.priceAfterDiscount]);
+    const price = selectedVariant?.price ?? product.price;
+    const priceAfterDiscount =
+      selectedVariant?.priceAfterDiscount ?? product.priceAfterDiscount;
+
+    return Math.round(((price - priceAfterDiscount) / price) * 100 * 10) / 10;
+  }, [hasDiscount, product.price, product.priceAfterDiscount, selectedVariant]);
 
   const handleVariantChange = (color, size) => {
     const variant = product.variants.find(
@@ -186,11 +189,15 @@ const QuickViewModal = ({ open, onClose, product }) => {
     }
   };
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = () => {
     let optimisticUpdated = false;
     let payload;
 
     try {
+      if (!isAuthenticated) {
+        throw new Error("Please login to add products to your cart.");
+      }
+
       if (hasVariants && !selectedVariant) {
         throw new Error("Please select a variant before adding to cart.");
       }
@@ -221,29 +228,53 @@ const QuickViewModal = ({ open, onClose, product }) => {
 
       dispatch(optimisticAddToCart(payload));
       optimisticUpdated = true;
-      toast.success("Added to cart successfully!");
 
-      await dispatch(addToCart(payload)).unwrap();
+      dispatch(addToCart(payload));
+
+      toast.success(`"${product.name}" added to cart`);
     } catch (error) {
-      console.log(error.message);
+      console.error("Add to cart failed:", error);
+
       if (optimisticUpdated) {
         dispatch(rollbackAddToCart(payload));
       }
-      toast.error(error.message || "Failed to add to cart. Please try again.");
+
+      toast.error(error?.message || "Failed to add to cart. Please try again.");
     }
   };
 
   const handleWishlist = () => {
-    const exists = wishlist.some((item) => item._id === product._id);
+    let optimisticUpdated = false;
 
-    dispatch(optimisticToggleWishlist(product._id));
+    try {
+      if (!isAuthenticated) {
+        throw new Error("Please login to manage your wishlist.");
+      }
 
-    if (exists) {
-      dispatch(deleteFromWishlist(product._id));
-      toast.success("Removed from wishlist");
-    } else {
-      dispatch(addToWishlist(product._id));
-      toast.success("Added to wishlist");
+      const exists = wishlist.some((item) => item._id === product._id);
+
+      dispatch(optimisticToggleWishlist(product._id));
+      optimisticUpdated = true;
+
+      if (exists) {
+        dispatch(deleteFromWishlist(product._id));
+
+        toast.success(`"${product.name}" removed from wishlist`);
+      } else {
+        dispatch(addToWishlist(product._id));
+
+        toast.success(`"${product.name}" added to wishlist`);
+      }
+    } catch (error) {
+      console.error("Wishlist update failed:", error);
+
+      if (optimisticUpdated) {
+        dispatch(optimisticToggleWishlist(product._id));
+      }
+
+      toast.error(
+        error?.message || "Failed to update wishlist. Please try again.",
+      );
     }
   };
 

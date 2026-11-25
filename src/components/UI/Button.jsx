@@ -49,7 +49,7 @@ const CustomButton = ({
         lg:!px-5
 
         !font-semibold !capitalize
-        !transition-all !duration-300
+        !transition-colors !bg-transparent !duration-300
 
         ${
           variant === "contained"
